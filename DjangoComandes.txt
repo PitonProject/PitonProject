@@ -1,0 +1,43 @@
+# Comandes
+
+django-admin.py startproject sobre
+python manage.py
+python manage.py syncdb -- Sincronizar Base de dades SQL amb el model de dades que s'ha definit al Django
+						-- Si no funciona correctament, eliminar la base de dades i tornar a executar la comanda
+						-- En el cas de SQLite només cal eliminar el fitxer (db.sqlite3) per esborrar la base de dades
+
+python manage.py runserver -- Molt senzill, no logs, només per proves de desenvolupament
+python manage.py startapp isobre -- Crear l'app a partir d'un projecte
+
+Dins del directori "isobre":
+	- admin.py 	-- El que volem que vagi afegit al admin interface de Django (web)
+	- tests.py 	-- Test unitaris contra la nostra app
+	- models.py -- 
+	- views.py 	--
+
+
+A settings.py:
+
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'isobre',							<<----
+)
+
+o bé, a admin.py:
+
+from isobre.models import Sobre
+
+admin.site.register(Sobre)
+
+I després:
+python manage.py syncdb
+python manage.py sql isobre -- Veure SQL generat
+
+
+Per posar claus foranes a una classe:
+donor = models.ForeignKey(Donor) -- donor: atribut privat classe, Donor nom de la classe de l'atribut (1 a N)
