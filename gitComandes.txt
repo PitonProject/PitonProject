@@ -1,8 +1,20 @@
-git clone https://github.com/sanchezfauste/test.git # Clona el repo
-git push # Enviar els commits a github
-git pull # Agafar els commits de github i fer match
-git fetch # Agafar els commits de github pero no fa el match
+git clone https://github.com/sanchezfauste/test.git 				# Clona el repo
+git push 									# Enviar els commits a github
+git pull									# Agafar els commits de github i fer match
+git fetch 									# Agafar els commits de github pero no fa el match
 
-git rm -r FolderName  # Borrar carpeta
+git rm -r FolderName  								# Borrar carpeta
+git rm FileName									# Borrar fitxer
 
-Generar clau ssh: $ ssh-keygen # es guarda a ~/.ssh/id_rsa.pub
+git log										# Mostrar commits
+git status									# Estat del git
+git config color.ui true							# Colorets als outputs del git a la terminal
+git config user.email "email@gmail.com"
+git config user.name "nom_usuari"
+
+Seqüència ordres:								# Posar un nou fitxer al repo
+git add FileName
+git commit -m "Missatge"
+git push
+
+Generar clau ssh: $ ssh-keygen 		# es guarda a ~/.ssh/id_rsa.pub
