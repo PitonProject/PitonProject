@@ -1,7 +1,0 @@
-git clone https://github.com/sanchezfauste/test.git # Clona el repo
-git push # Enviar els commits a github
-git pull # Agafar els commits de github i fer match
-git fetch # Agafar els commits de github pero no fa el match
-
-
-Generar clau ssh: $ ssh-keygen # es guarda a ~/.ssh/id_rsa.pub
