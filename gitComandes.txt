@@ -1,0 +1,8 @@
+git clone https://github.com/sanchezfauste/test.git # Clona el repo
+git push # Enviar els commits a github
+git pull # Agafar els commits de github i fer match
+git fetch # Agafar els commits de github pero no fa el match
+
+git rm -r FolderName  # Borrar carpeta
+
+Generar clau ssh: $ ssh-keygen # es guarda a ~/.ssh/id_rsa.pub
