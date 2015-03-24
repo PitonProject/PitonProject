@@ -1,0 +1,4 @@
+File > Settings > Project: projectName > Project Interpreter > Select python bin in virtual environment
+File > Settings > Languages & Frameworks > Django > Django project root: FolderName in FolderProject
+						    > Settings: FolderName/settings.py
+Botó dret a PlayIt > Mark Directory As > Sources Root
