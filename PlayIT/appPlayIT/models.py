@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 class Client(models.Model):
     username = models.TextField(primary_key=True)
     #password = models.TextField()
