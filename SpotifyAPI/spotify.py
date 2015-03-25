@@ -14,11 +14,16 @@ class PlaylistBuilder:
 
     def create_playlist(self, playlist_name):
         url = self.url_base
-        data = {}
+        data = {"name":playlist_name,
+                "public":"true"}
         response = self.post_request(url, data)
+        print response
 
     def post_request(self, url, data):
-        response = requests.post(url, data=data)
+        headers = {"Accept":"application/json",
+                   "Authorization":"Bearer " + self.api_key,
+                   "Content-Type":"application/json"}
+        response = requests.post(url, json=data, headers=headers)
         return json.loads(response.text)
 
 class SpotifyBrowser:
@@ -70,4 +75,6 @@ if __name__ == '__main__':
     #sb.search_track("Més que la meva sang")
     #sb.search_artist("Txarango")
     #sb.search_album("Som riu")
-    sb.search_playlist("Catala")
+    #sb.search_playlist("Catala")
+    p = PlaylistBuilder("pitonproject", "")
+    p.create_playlist("Prova 1")
