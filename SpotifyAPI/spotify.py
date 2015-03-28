@@ -17,12 +17,12 @@ class PlaylistManager:
                         "Content-Type":"application/json"}
 
     def add_track_to_playlist(self, track_id):
-        url = self.url_base + "/" + self.playlist_id + "/tracks?uris=spotify%3Atrack%3A" + track_id
+        url = self.url_base + self.playlist_id + "/tracks?uris=spotify%3Atrack%3A" + track_id
         response = self.post_request(url, None)
         print json.dumps(response, indent=4)
 
     def remove_track_from_playlist(self, track_id):
-        url = self.url_base + "/" + self.playlist_id + "/tracks"
+        url = self.url_base + self.playlist_id + "/tracks"
         data = {"tracks": [{"uri": "spotify:track:" + track_id}]}
         response = self.delete_request(url, data)
         print json.dumps(response, indent=4)
@@ -100,5 +100,5 @@ if __name__ == '__main__':
     #p = PlaylistManager("pitonproject", "BQDAr-A_N4F5StlL9wkBRm5X8KQ_Ut6JkHZpjzQ5MOEiob4WYXqQe2yTDxdhLAiOgCZrFI6JtQ4j3gXf-AmhsWZMHsGBruwOjMx7mTfROpU7jUvYgZdKWqBaZx_vEuJOTvWqxwgG6gD5Ex9CfA5dX2wAJJbZoGYFm0QoUW4g8niRmy30bf3yd-vMA6AfEpkG4NmQo4RygEGHz1nWcQUPLg3kHTGdh3bJrzUzJA")
     #p.create_playlist("Prova 1")
     p = PlaylistManager("pitonproject", "BQDAr-A_N4F5StlL9wkBRm5X8KQ_Ut6JkHZpjzQ5MOEiob4WYXqQe2yTDxdhLAiOgCZrFI6JtQ4j3gXf-AmhsWZMHsGBruwOjMx7mTfROpU7jUvYgZdKWqBaZx_vEuJOTvWqxwgG6gD5Ex9CfA5dX2wAJJbZoGYFm0QoUW4g8niRmy30bf3yd-vMA6AfEpkG4NmQo4RygEGHz1nWcQUPLg3kHTGdh3bJrzUzJA", "0AWZxqSMorhy3dlQ43Bgof")
-    #p.add_track_to_playlist("1rf3C6fWUJU2puq8Smqph9")
+    p.add_track_to_playlist("1rf3C6fWUJU2puq8Smqph9")
     p.remove_track_from_playlist("1rf3C6fWUJU2puq8Smqph9")
