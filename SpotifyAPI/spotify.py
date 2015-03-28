@@ -5,19 +5,30 @@ import sys
 import requests
 import json
 
-class PlaylistBuilder:
+class PlaylistManager:
 
-    def __init__(self, user_id, api_key):
+    def __init__(self, user_id, api_key, playlist_id=None):
         self.user_id = user_id
         self.api_key = api_key
+        self.playlist_id = playlist_id
         self.url_base = "https://api.spotify.com/v1/users/" + self.user_id + "/playlists/"
+
+    def add_track_to_playlist(self, track_id):
+        url = self.url_base + "/" + self.playlist_id + "/tracks?uris=spotify%3Atrack%3A" + track_id
+        response = self.post_request(url, None)
+        print json.dumps(response, indent=4)
+
+    def set_playlist(self, playlist_id):
+        self.playlist_id = playlist_id
 
     def create_playlist(self, playlist_name):
         url = self.url_base
         data = {"name":playlist_name,
                 "public":"true"}
         response = self.post_request(url, data)
-        print response
+        if not self.playlist_id:
+            self.playlist_id = response["id"]
+        print json.dumps(response, indent=4)
 
     def post_request(self, url, data):
         headers = {"Accept":"application/json",
@@ -76,5 +87,7 @@ if __name__ == '__main__':
     #sb.search_artist("Txarango")
     #sb.search_album("Som riu")
     #sb.search_playlist("Catala")
-    p = PlaylistBuilder("pitonproject", "")
+    p = PlaylistManager("pitonproject", "BQDAr-A_N4F5StlL9wkBRm5X8KQ_Ut6JkHZpjzQ5MOEiob4WYXqQe2yTDxdhLAiOgCZrFI6JtQ4j3gXf-AmhsWZMHsGBruwOjMx7mTfROpU7jUvYgZdKWqBaZx_vEuJOTvWqxwgG6gD5Ex9CfA5dX2wAJJbZoGYFm0QoUW4g8niRmy30bf3yd-vMA6AfEpkG4NmQo4RygEGHz1nWcQUPLg3kHTGdh3bJrzUzJA")
     p.create_playlist("Prova 1")
+    #p = PlaylistManager("pitonproject", "BQDAr-A_N4F5StlL9wkBRm5X8KQ_Ut6JkHZpjzQ5MOEiob4WYXqQe2yTDxdhLAiOgCZrFI6JtQ4j3gXf-AmhsWZMHsGBruwOjMx7mTfROpU7jUvYgZdKWqBaZx_vEuJOTvWqxwgG6gD5Ex9CfA5dX2wAJJbZoGYFm0QoUW4g8niRmy30bf3yd-vMA6AfEpkG4NmQo4RygEGHz1nWcQUPLg3kHTGdh3bJrzUzJA", "5tQegTtq4HF5jeDpvAPbso")
+    p.add_track_to_playlist("1rf3C6fWUJU2puq8Smqph9")
