@@ -42,9 +42,10 @@ class PlaylistManager:
     def get_playlist_tracks(self, offset=0, limit=100):
         url = self.url_base + self.playlist_id + "/tracks?offset=" + str(offset) + "&limit=" + str(limit)
         response = self.get_request(url)
-        for item in response["items"]:
+        #print response["next"]
+        for i, item in enumerate(response["items"]):
             track = item["track"]
-            print track["name"], "-", track["artists"][0]["name"], \
+            print i+offset, track["name"], "-", track["artists"][0]["name"], \
                     "-", track["album"]["name"], "--> id:", track["id"]
 
     def post_request(self, url, data):
@@ -113,5 +114,6 @@ if __name__ == '__main__':
     #p.create_playlist("Prova 1")
     p = PlaylistManager("pitonproject", "BQAClYlMFsDdsyKHtcl7epM2-7V00g9JU9ZvBOXaP3V8LSpMq5vWuHji-vHOMtWq2G8u1ECHEmLAOBBPeNKhWuKo5sQlWh_z_8xu3EWosV5FhWK038PFLzUZXNigPZquMcv2zijYoiXTEGAhhJsIRF-5Z3Qt6cR99KqnO3MXpMXNLpgGgsmMXspyAIUnAk53PgbBT0VQ2BftzcyGyei_6_KDTzXUKxwnpUOA0g", "0AWZxqSMorhy3dlQ43Bgof")
     #p.add_track_to_playlist("1rf3C6fWUJU2puq8Smqph9")
+    #p.get_playlist_tracks()
     #p.remove_track_from_playlist("1rf3C6fWUJU2puq8Smqph9")
     p.get_playlist_tracks()
