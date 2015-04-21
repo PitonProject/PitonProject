@@ -70,33 +70,39 @@ class SpotifyBrowser:
         "artist" : "type=artist&q="
     }
 
-    def search_track(self, track, offset=0, limit=50):
-        response = self.get_json_response("track", track, offset, limit)
+    @staticmethod
+    def search_track(track, offset=0, limit=50):
+        response = SpotifyBrowser.get_json_response("track", track, offset, limit)
+        return response
         tracks = response["tracks"]["items"]
         for track in tracks:
             print track["name"], "-", track["artists"][0]["name"], \
                     "-", track["album"]["name"], "--> id:", track["id"]
 
-    def search_album(self, album, offset=0, limit=50):
-        response = self.get_json_response("album", album, offset, limit)
+    @staticmethod
+    def search_album(album, offset=0, limit=50):
+        response = SpotifyBrowser.get_json_response("album", album, offset, limit)
         albums = response["albums"]["items"]
         for album in albums:
             print album["name"], "--> id:", album["id"]
 
-    def search_artist(self, artist, offset=0, limit=50):
-        response = self.get_json_response("artist", artist, offset, limit)
+    @staticmethod
+    def search_artist(artist, offset=0, limit=50):
+        response = SpotifyBrowser.get_json_response("artist", artist, offset, limit)
         artists = response["artists"]["items"]
         for artist in artists:
             print artist["name"], "--> id:", artist["id"]
 
-    def search_playlist(self, playlist, offset=0, limit=50):
-        response = self.get_json_response("playlist", playlist, offset, limit)
+    @staticmethod
+    def search_playlist(playlist, offset=0, limit=50):
+        response = SpotifyBrowser.get_json_response("playlist", playlist, offset, limit)
         playlists = response["playlists"]["items"]
         for playlist in playlists:
             print playlist["name"], "-", playlist["owner"]["id"], \
                     "--> id:", playlist["id"]
 
-    def get_json_response(self, service, keywords, offset=0, limit=50):
+    @staticmethod
+    def get_json_response(service, keywords, offset=0, limit=50):
         url = SpotifyBrowser.url_base \
                 + SpotifyBrowser.url_services[service] \
                 + keywords.replace(" ", "%20") \
@@ -106,9 +112,10 @@ class SpotifyBrowser:
         return json.loads(response.text)
 
 if __name__ == '__main__':
-    sb = SpotifyBrowser()
+    #sb = SpotifyBrowser()
     #print json.dumps(sb.get_json_response("track", "Som persones"), indent=4)
-    sb.search_track("Més que la meva sang", limit=2, offset=1)
+    #sb.search_track("Més que la meva sang", limit=2, offset=1)
+    SpotifyBrowser.search_track("Més que la meva sang", limit=2, offset=1)
     #sb.search_artist("Txarango")
     #sb.search_album("Som riu")
     #sb.search_playlist("Catala")
