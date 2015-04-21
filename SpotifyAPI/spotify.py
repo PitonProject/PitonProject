@@ -70,50 +70,52 @@ class SpotifyBrowser:
         "artist" : "type=artist&q="
     }
 
-    def search_track(self, track):
-        response = self.get_json_response("track", track)
+    def search_track(self, track, offset=0, limit=50):
+        response = self.get_json_response("track", track, offset, limit)
         tracks = response["tracks"]["items"]
         for track in tracks:
             print track["name"], "-", track["artists"][0]["name"], \
                     "-", track["album"]["name"], "--> id:", track["id"]
 
-    def search_album(self, album):
-        response = self.get_json_response("album", album)
+    def search_album(self, album, offset=0, limit=50):
+        response = self.get_json_response("album", album, offset, limit)
         albums = response["albums"]["items"]
         for album in albums:
             print album["name"], "--> id:", album["id"]
 
-    def search_artist(self, artist):
-        response = self.get_json_response("artist", artist)
+    def search_artist(self, artist, offset=0, limit=50):
+        response = self.get_json_response("artist", artist, offset, limit)
         artists = response["artists"]["items"]
         for artist in artists:
             print artist["name"], "--> id:", artist["id"]
 
-    def search_playlist(self, playlist):
-        response = self.get_json_response("playlist", playlist)
+    def search_playlist(self, playlist, offset=0, limit=50):
+        response = self.get_json_response("playlist", playlist, offset, limit)
         playlists = response["playlists"]["items"]
         for playlist in playlists:
             print playlist["name"], "-", playlist["owner"]["id"], \
                     "--> id:", playlist["id"]
 
-    def get_json_response(self, service, keywords):
+    def get_json_response(self, service, keywords, offset=0, limit=50):
         url = SpotifyBrowser.url_base \
                 + SpotifyBrowser.url_services[service] \
-                + keywords.replace(" ", "%20")
+                + keywords.replace(" ", "%20") \
+                + "&offset=" + str(offset) \
+                + "&limit=" + str(limit)
         response = requests.get(url)
         return json.loads(response.text)
 
 if __name__ == '__main__':
     sb = SpotifyBrowser()
     #print json.dumps(sb.get_json_response("track", "Som persones"), indent=4)
-    #sb.search_track("Més que la meva sang")
+    sb.search_track("Més que la meva sang", limit=2, offset=1)
     #sb.search_artist("Txarango")
     #sb.search_album("Som riu")
     #sb.search_playlist("Catala")
     #p = PlaylistManager("pitonproject", "BQDAr-A_N4F5StlL9wkBRm5X8KQ_Ut6JkHZpjzQ5MOEiob4WYXqQe2yTDxdhLAiOgCZrFI6JtQ4j3gXf-AmhsWZMHsGBruwOjMx7mTfROpU7jUvYgZdKWqBaZx_vEuJOTvWqxwgG6gD5Ex9CfA5dX2wAJJbZoGYFm0QoUW4g8niRmy30bf3yd-vMA6AfEpkG4NmQo4RygEGHz1nWcQUPLg3kHTGdh3bJrzUzJA")
     #p.create_playlist("Prova 1")
-    p = PlaylistManager("pitonproject", "BQAClYlMFsDdsyKHtcl7epM2-7V00g9JU9ZvBOXaP3V8LSpMq5vWuHji-vHOMtWq2G8u1ECHEmLAOBBPeNKhWuKo5sQlWh_z_8xu3EWosV5FhWK038PFLzUZXNigPZquMcv2zijYoiXTEGAhhJsIRF-5Z3Qt6cR99KqnO3MXpMXNLpgGgsmMXspyAIUnAk53PgbBT0VQ2BftzcyGyei_6_KDTzXUKxwnpUOA0g", "0AWZxqSMorhy3dlQ43Bgof")
+    #p = PlaylistManager("pitonproject", "BQAClYlMFsDdsyKHtcl7epM2-7V00g9JU9ZvBOXaP3V8LSpMq5vWuHji-vHOMtWq2G8u1ECHEmLAOBBPeNKhWuKo5sQlWh_z_8xu3EWosV5FhWK038PFLzUZXNigPZquMcv2zijYoiXTEGAhhJsIRF-5Z3Qt6cR99KqnO3MXpMXNLpgGgsmMXspyAIUnAk53PgbBT0VQ2BftzcyGyei_6_KDTzXUKxwnpUOA0g", "0AWZxqSMorhy3dlQ43Bgof")
     #p.add_track_to_playlist("1rf3C6fWUJU2puq8Smqph9")
     #p.get_playlist_tracks()
     #p.remove_track_from_playlist("1rf3C6fWUJU2puq8Smqph9")
-    p.get_playlist_tracks()
+    #p.get_playlist_tracks()
