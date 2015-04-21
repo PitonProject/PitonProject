@@ -1,5 +1,5 @@
-{% extends "basepage.html" %}
-{% block content %}
+{% extends "browse.html" %}
+{% block results %}
     {% if user.username %}
         <p>Browsing track: {{ keyword }} on Spotify.</p>
         <table style="width:100%" >
@@ -9,7 +9,7 @@
                 <th>Album</th>
                 <th>id</th>
             </tr>
-            {% for track in tracks %}
+            {% for track in tracks.items %}
                 <tr>
                     <td>{{ track.name }}</td>
                     <td>{{ track.artists.0.name }}</td>
@@ -18,8 +18,6 @@
                 </tr>
             {% endfor %}
         </table>
-    {% else %}
-        <p>Accedeix al panell de <a href="/login/">login</a> per a accedir a les funcionalitats o bé
-            <a href="/register/">registra't</a> si encara no ho has fet!</p>
+        <p>Total results: {{ tracks.total }}. Showing: {{ tracks.limit }}. Offset: {{ tracks.offset }}</p>
     {% endif %}
 {% endblock %}

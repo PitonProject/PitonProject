@@ -19,7 +19,7 @@ def browse_track(request, keyword, offset, limit):
             'pagetitle' : 'Search a Track on Spotify',
             'user' : request.user,
             'keyword' : keyword,
-            'tracks' : SpotifyBrowser.search_track(keyword, offset, limit)["tracks"]["items"]
+            'tracks' : SpotifyBrowser.search_track(keyword, offset, limit)["tracks"]
         }
     )
 
