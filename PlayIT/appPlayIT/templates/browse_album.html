@@ -1,0 +1,19 @@
+{% extends "browse.html" %}
+{% block results %}
+    {% if user.username %}
+        <p>Browsing album: {{ keyword }} on Spotify.</p>
+        <table style="width:100%" >
+            <tr>
+                <th>Name</th>
+                <th>id</th>
+            </tr>
+            {% for album in albums.items %}
+                <tr>
+                    <td>{{ album.name }}</td>
+                    <td>{{ album.id }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <p>Total results: {{ albums.total }}. Max: {{ albums.limit }}. Offset: {{ albums.offset }}</p>
+    {% endif %}
+{% endblock %}

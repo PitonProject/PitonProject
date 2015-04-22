@@ -82,6 +82,7 @@ class SpotifyBrowser:
     @staticmethod
     def search_album(album, offset=0, limit=50):
         response = SpotifyBrowser.get_json_response("album", album, offset, limit)
+        return response
         albums = response["albums"]["items"]
         for album in albums:
             print album["name"], "--> id:", album["id"]
@@ -89,6 +90,7 @@ class SpotifyBrowser:
     @staticmethod
     def search_artist(artist, offset=0, limit=50):
         response = SpotifyBrowser.get_json_response("artist", artist, offset, limit)
+        return response
         artists = response["artists"]["items"]
         for artist in artists:
             print artist["name"], "--> id:", artist["id"]
@@ -96,6 +98,7 @@ class SpotifyBrowser:
     @staticmethod
     def search_playlist(playlist, offset=0, limit=50):
         response = SpotifyBrowser.get_json_response("playlist", playlist, offset, limit)
+        return response
         playlists = response["playlists"]["items"]
         for playlist in playlists:
             print playlist["name"], "-", playlist["owner"]["id"], \

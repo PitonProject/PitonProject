@@ -5,7 +5,7 @@
         <table style="width:100%" >
             <tr>
                 <th>Name</th>
-                <th>Artists</th>
+                <th>Artist</th>
                 <th>Album</th>
                 <th>id</th>
             </tr>
@@ -18,6 +18,6 @@
                 </tr>
             {% endfor %}
         </table>
-        <p>Total results: {{ tracks.total }}. Showing: {{ tracks.limit }}. Offset: {{ tracks.offset }}</p>
+        <p>Total results: {{ tracks.total }}. Max: {{ tracks.limit }}. Offset: {{ tracks.offset }}</p>
     {% endif %}
 {% endblock %}
