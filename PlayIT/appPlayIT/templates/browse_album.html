@@ -15,5 +15,6 @@
             {% endfor %}
         </table>
         <p>Total results: {{ albums.total }}. Max: {{ albums.limit }}. Offset: {{ albums.offset }}</p>
+        <p><a href="{{ next_page }}">Next page</a> </p>
     {% endif %}
 {% endblock %}

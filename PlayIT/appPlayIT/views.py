@@ -11,7 +11,7 @@ def mainpage(request):
                 'user': request.user
         })
 
-def browse_track(request, keyword, offset, limit):
+def browse_track(request, keyword, offset, limit, next_page):
     return render_to_response(
         'browse_track.html',
         {
@@ -19,11 +19,12 @@ def browse_track(request, keyword, offset, limit):
             'pagetitle' : 'Search a Track on Spotify',
             'user' : request.user,
             'keyword' : keyword,
-            'tracks' : SpotifyBrowser.search_track(keyword, offset, limit)["tracks"]
+            'tracks' : SpotifyBrowser.search_track(keyword, offset, limit)["tracks"],
+            'next_page' : next_page
         }
     )
 
-def browse_artist(request, keyword, offset, limit):
+def browse_artist(request, keyword, offset, limit, next_page):
     return render_to_response(
         'browse_artist.html',
         {
@@ -31,11 +32,12 @@ def browse_artist(request, keyword, offset, limit):
             'pagetitle' : 'Search an Artist on Spotify',
             'user' : request.user,
             'keyword' : keyword,
-            'artists' : SpotifyBrowser.search_artist(keyword, offset, limit)["artists"]
+            'artists' : SpotifyBrowser.search_artist(keyword, offset, limit)["artists"],
+            'next_page' : next_page
         }
     )
 
-def browse_album(request, keyword, offset, limit):
+def browse_album(request, keyword, offset, limit, next_page):
     return render_to_response(
         'browse_album.html',
         {
@@ -43,11 +45,12 @@ def browse_album(request, keyword, offset, limit):
             'pagetitle' : 'Search an Album on Spotify',
             'user' : request.user,
             'keyword' : keyword,
-            'albums' : SpotifyBrowser.search_album(keyword, offset, limit)["albums"]
+            'albums' : SpotifyBrowser.search_album(keyword, offset, limit)["albums"],
+            'next_page' : next_page
         }
     )
 
-def browse_playlist(request, keyword, offset, limit):
+def browse_playlist(request, keyword, offset, limit, next_page):
     return render_to_response(
         'browse_playlist.html',
         {
@@ -55,15 +58,16 @@ def browse_playlist(request, keyword, offset, limit):
             'pagetitle' : 'Search a Playlist on Spotify',
             'user' : request.user,
             'keyword' : keyword,
-            'playlists' : SpotifyBrowser.search_playlist(keyword, offset, limit)["playlists"]
+            'playlists' : SpotifyBrowser.search_playlist(keyword, offset, limit)["playlists"],
+            'next_page' : next_page
         }
     )
 
 def browse(request):
     type = request.GET.get('type')
     keyword = request.GET.get('keyword')
-    offset = request.GET.get('offset', 0)
-    limit = request.GET.get('limit', 50)
+    offset = int(request.GET.get('offset', 0))
+    limit = int(request.GET.get('limit', 50))
     if not type or not keyword:
         return render_to_response(
             'browse.html',
@@ -73,11 +77,12 @@ def browse(request):
                     'user': request.user
             })
     else:
+        next_page = "/browse?keyword=" + keyword + "&type=" + type + "&limit=" + str(limit) + "&offset=" + str(offset+limit)
         if type == 'track':
-            return browse_track(request, keyword, offset, limit)
+            return browse_track(request, keyword, offset, limit, next_page)
         elif type == 'artist':
-            return browse_artist(request, keyword, offset, limit)
+            return browse_artist(request, keyword, offset, limit, next_page)
         elif type == 'album':
-            return browse_album(request, keyword, offset, limit)
+            return browse_album(request, keyword, offset, limit, next_page)
         elif type == 'playlist':
-            return browse_playlist(request, keyword, offset, limit)
+            return browse_playlist(request, keyword, offset, limit, next_page)
