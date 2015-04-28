@@ -1,16 +1,10 @@
 {% extends "basepage.html" %}
 {% block content %}
     {% if user.username %}
-        <p>Buscar a Spotify</p>
-        <form method="get" action="/browse">
-            <input type="search" name="keyword" />
-            <select name="type">
-                <option value="track">Track</option>
-                <option value="artist">Artist</option>
-                <option value="album">Album</option>
-                <option value="playlist">Playlist</option>
-            <input type="submit" value="Buscar"/>
-        </form>
+        <p>Id track Spotify: {{ track.id }}</p>
+        <p>Track name: {{ track.name }}</p>
+        <p>Artist: {{ track.artists.0.name }}</p>
+        <p>Album: {{ track.album.name }}</p>
     {% else %}
         <p>Accedeix al panell de <a href="/login/">login</a> per a accedir a les funcionalitats o bé
             <a href="/register/">registra't</a> si encara no ho has fet!</p>

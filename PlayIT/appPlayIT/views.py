@@ -86,3 +86,14 @@ def browse(request):
             return browse_album(request, keyword, offset, limit, next_page)
         elif type == 'playlist':
             return browse_playlist(request, keyword, offset, limit, next_page)
+
+def track(request, track_id):
+    return render_to_response(
+        'track.html',
+        {
+            'titlehead' : 'PlayIT - Add Track to Pub Playlist',
+            'pagetitle' : 'Add a Spotify Track to a Pub Playlist',
+            'user' : request.user,
+            'track' : SpotifyBrowser.get_track_by_id(track_id)
+        }
+    )
