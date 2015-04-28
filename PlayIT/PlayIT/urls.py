@@ -14,5 +14,6 @@ urlpatterns = patterns('',
     url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^$', mainpage, name='home'),
     url(r'^browse$', browse),
-    url(r'^track/(\w+)/$', track)
+    url(r'^track/(\w+)/$', track),
+    url(r'^pub/(\w+)/$', get_pub)
 )

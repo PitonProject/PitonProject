@@ -103,3 +103,14 @@ def track(request, track_id):
             'track' : SpotifyBrowser.get_track_by_id(track_id)
         }
     )
+
+def get_pub(request, pub_id):
+    return render_to_response(
+        'pub.html',
+        {
+            'titlehead' : 'PlayIT - View a Pub',
+            'pagetitle' : 'View Pub detail',
+            'pub' : Pub.objects.get(id=pub_id),
+            'playlists' : Playlist.objects.filter(id_pub=pub_id)
+        }
+    )

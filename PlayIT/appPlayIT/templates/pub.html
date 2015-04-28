@@ -1,0 +1,17 @@
+{% extends "basepage.html" %}
+{% block content %}
+    <p>Showing Playlists of Pub: {{ pub.name }}</p>
+    <table style="width:100%" >
+        <tr>
+            <th>id</th>
+            <th>Name</th>
+        </tr>
+        {% for playlist in playlists %}
+            <tr>
+                <td>{{ playlist.id }}</td>
+                <td>{{ playlist.name }}</td>
+                <td><a href="/playlist/{{ playlist.id }}">Show</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
