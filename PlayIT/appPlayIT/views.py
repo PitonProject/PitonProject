@@ -1,14 +1,20 @@
 from django.shortcuts import render, render_to_response
 from SpotifyAPI.spotify import SpotifyBrowser
+from django.contrib.auth.models import User
+from appPlayIT.models import *
 
 # Create your views here.
 def mainpage(request):
-   return render_to_response(
+    pubs = None
+    if request.user:
+        pubs = Pub.objects.filter(id__in=User.objects.get(username=request.user).user_pub_set.all())
+    return render_to_response(
         'mainpage.html',
         {
                 'titlehead': 'PlayIT app',
                 'pagetitle': 'Benvingut a PlayIT. Una aplicacio de seleccio de musica per un local',
-                'user': request.user
+                'user': request.user,
+                'pubs' : pubs
         })
 
 def browse_track(request, keyword, offset, limit, next_page):

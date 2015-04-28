@@ -4,6 +4,24 @@
         <p>Welcome {{ user.username }}!
         To bribes and envelopes management !
         You know what to do</p>
+        <p>List of user pubs:</p>
+        <table style="width:100%" >
+            <tr>
+                <th>id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>City</th>
+            </tr>
+            {% for pub in pubs %}
+                <tr>
+                    <td>{{ pub.id }}</td>
+                    <td>{{ pub.name }}</td>
+                    <td>{{ pub.address }}</td>
+                    <td>{{ pub.city }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
     {% else %}
         <p>Accedeix al panell de <a href="/login/">login</a> per a accedir a les funcionalitats o bé
             <a href="/register/">registra't</a> si encara no ho has fet!</p>
