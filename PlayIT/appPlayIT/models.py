@@ -14,6 +14,8 @@ class Pub(models.Model):
     address = models.TextField()
     city = models.TextField()
     #id_owner = models.ForeignKey(User)
+    def __unicode__(self):
+        return self.name
 
 #class Client_Pub(models.Model):
  #   id_client = models.ForeignKey(Client, primary_key=True)
@@ -29,6 +31,8 @@ class Playlist(models.Model):
     #id_spotify_playlist = models.TextField(primary_key=True)
     id_pub = models.ForeignKey(Pub)
     name = models.TextField()
+    def __unicode__(self):
+        return self.name
 
 class Track(models.Model):
     spotify_id = models.TextField(primary_key=True)
@@ -37,6 +41,8 @@ class Track(models.Model):
     #spotify_artist_id = models.TextField()
     album = models.TextField()
     #spotify_album_id = models.TextField()
+    def __unicode__(self):
+        return self.name
 
 class Playlist_Track(models.Model):
     id_playlist = models.ForeignKey(Playlist)
