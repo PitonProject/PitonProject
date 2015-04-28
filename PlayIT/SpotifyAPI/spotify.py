@@ -114,11 +114,16 @@ class SpotifyBrowser:
         response = requests.get(url)
         return json.loads(response.text)
 
+    @staticmethod
+    def get_track_by_id(track_id):
+        url = 'https://api.spotify.com/v1/tracks/' + track_id
+        return json.loads(requests.get(url).text)
+
 if __name__ == '__main__':
     #sb = SpotifyBrowser()
     #print json.dumps(sb.get_json_response("track", "Som persones"), indent=4)
     #sb.search_track("Més que la meva sang", limit=2, offset=1)
-    SpotifyBrowser.search_track("Més que la meva sang", limit=2, offset=1)
+    #SpotifyBrowser.search_track("Més que la meva sang", limit=2, offset=1)
     #sb.search_artist("Txarango")
     #sb.search_album("Som riu")
     #sb.search_playlist("Catala")
@@ -129,3 +134,4 @@ if __name__ == '__main__':
     #p.get_playlist_tracks()
     #p.remove_track_from_playlist("1rf3C6fWUJU2puq8Smqph9")
     #p.get_playlist_tracks()
+    print SpotifyBrowser.get_track_by_id('6FXmJdGS5uNEmU3eS6ge5o')
