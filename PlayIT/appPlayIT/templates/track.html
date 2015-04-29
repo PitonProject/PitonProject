@@ -1,10 +1,26 @@
 {% extends "basepage.html" %}
 {% block content %}
+    <p>Id track Spotify: {{ track.id }}</p>
+    <p>Track name: {{ track.name }}</p>
+    <p>Artist: {{ track.artists.0.name }}</p>
+    <p>Album: {{ track.album.name }}</p>
     {% if user.username %}
-        <p>Id track Spotify: {{ track.id }}</p>
-        <p>Track name: {{ track.name }}</p>
-        <p>Artist: {{ track.artists.0.name }}</p>
-        <p>Album: {{ track.album.name }}</p>
+        {% if pubs %}
+            <p>List of user pubs:</p>
+            <table style="width:100%" >
+                <tr>
+                    <th>Name</th>
+                </tr>
+                {% for pub in pubs %}
+                    <tr>
+                        <td>{{ pub.name }}</td>
+                        <td><a href="">Add song to this pub</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+           {% else %}
+                <p>No tens cap pub registrat!</p>
+           {% endif %}
     {% else %}
         <p>Accedeix al panell de <a href="/login/">login</a> per a accedir a les funcionalitats o bé
             <a href="/register/">registra't</a> si encara no ho has fet!</p>

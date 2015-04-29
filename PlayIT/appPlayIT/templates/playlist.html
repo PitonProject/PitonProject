@@ -1,20 +1,24 @@
 {% extends "basepage.html" %}
 {% block content %}
-    <p>Showing tracks of playlist: {{ playlist.name }}</p>
-    <table style="width:100%" >
-        <tr>
-            <th>Name</th>
-            <th>Artist</th>
-            <th>Album</th>
-            <th>id</th>
-        </tr>
-        {% for track in tracks %}
+    {% if tracks %}
+        <p>Showing tracks of playlist: {{ playlist.name }}</p>
+        <table style="width:100%" >
             <tr>
-                <td>{{ track.name }}</td>
-                <td>{{ track.artist }}</td>
-                <td>{{ track.album }}</td>
-                <td>{{ track.spotify_id }}</td>
+                <th>Name</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>id</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for track in tracks %}
+                <tr>
+                    <td>{{ track.name }}</td>
+                    <td>{{ track.artist }}</td>
+                    <td>{{ track.album }}</td>
+                    <td>{{ track.spotify_id }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>This playlist is empty!</p>
+    {% endif %}
 {% endblock %}

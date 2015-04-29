@@ -4,25 +4,29 @@
         <p>Welcome {{ user.username }}!
         To bribes and envelopes management !
         You know what to do</p>
-        <p>List of user pubs:</p>
-        <table style="width:100%" >
-            <tr>
-                <th>id</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>City</th>
-            </tr>
-            {% for pub in pubs %}
+        {% if pubs %}
+            <p>List of user pubs:</p>
+            <table style="width:100%" >
                 <tr>
-                    <td>{{ pub.id }}</td>
-                    <td>{{ pub.name }}</td>
-                    <td>{{ pub.address }}</td>
-                    <td>{{ pub.city }}</td>
-                    <td><a href="/pub/{{ pub.id }}">Show</a></td>
-                    <td><a href="">Remove</a></td>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>City</th>
                 </tr>
-            {% endfor %}
-        </table>
+                {% for pub in pubs %}
+                    <tr>
+                        <td>{{ pub.id }}</td>
+                        <td>{{ pub.name }}</td>
+                        <td>{{ pub.address }}</td>
+                        <td>{{ pub.city }}</td>
+                        <td><a href="/pub/{{ pub.id }}">Show</a></td>
+                        <td><a href="">Remove</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+       {% else %}
+            <p>No hi han pubs registrats.</p>
+       {% endif %}
 
     {% else %}
         <p>Accedeix al panell de <a href="/login/">login</a> per a accedir a les funcionalitats o bé

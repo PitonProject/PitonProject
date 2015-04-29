@@ -1,17 +1,21 @@
 {% extends "basepage.html" %}
 {% block content %}
-    <p>Showing all registered playlists</p>
-    <table style="width:100%" >
-        <tr>
-            <th>id</th>
-            <th>Name</th>
-        </tr>
-        {% for playlist in playlists %}
+    {% if playlists %}
+        <p>Showing all registered playlists</p>
+        <table style="width:100%" >
             <tr>
-                <td>{{ playlist.id }}</td>
-                <td>{{ playlist.name }}</td>
-                <td><a href="/playlist/{{ playlist.id }}">Show</a></td>
+                <th>id</th>
+                <th>Name</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for playlist in playlists %}
+                <tr>
+                    <td>{{ playlist.id }}</td>
+                    <td>{{ playlist.name }}</td>
+                    <td><a href="/playlist/{{ playlist.id }}">Show</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No hi han playlists registrades!</p>
+    {% endif %}
 {% endblock %}

@@ -1,17 +1,21 @@
 {% extends "basepage.html" %}
 {% block content %}
-    <p>Showing Playlists of Pub: {{ pub.name }}</p>
-    <table style="width:100%" >
-        <tr>
-            <th>id</th>
-            <th>Name</th>
-        </tr>
-        {% for playlist in playlists %}
+    {% if playlists %}
+        <p>Showing Playlists of Pub: {{ pub.name }}</p>
+        <table style="width:100%" >
             <tr>
-                <td>{{ playlist.id }}</td>
-                <td>{{ playlist.name }}</td>
-                <td><a href="/playlist/{{ playlist.id }}">Show</a></td>
+                <th>id</th>
+                <th>Name</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for playlist in playlists %}
+                <tr>
+                    <td>{{ playlist.id }}</td>
+                    <td>{{ playlist.name }}</td>
+                    <td><a href="/playlist/{{ playlist.id }}">Show</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Aquest pub no te playlists registrades!</p>
+    {% endif %}
 {% endblock %}

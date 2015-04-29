@@ -1,22 +1,26 @@
 {% extends "basepage.html" %}
 {% block content %}
-    <p>Showing all registered pubs</p>
-    <table style="width:100%" >
-        <tr>
-            <th>id</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>City</th>
-
-        </tr>
-        {% for pub in pubs %}
+    {% if pubs %}
+        <p>Showing all registered pubs</p>
+        <table style="width:100%" >
             <tr>
-                <td>{{ pub.id }}</td>
-                <td>{{ pub.name }}</td>
-                <td>{{ pub.address }}</td>
-                <td>{{ pub.city }}</td>
-                <td><a href="/pub/{{ pub.id }}">Show</a></td>
+                <th>id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>City</th>
+
             </tr>
-        {% endfor %}
-    </table>
+            {% for pub in pubs %}
+                <tr>
+                    <td>{{ pub.id }}</td>
+                    <td>{{ pub.name }}</td>
+                    <td>{{ pub.address }}</td>
+                    <td>{{ pub.city }}</td>
+                    <td><a href="/pub/{{ pub.id }}">Show</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No hi ha cap pub registrat!</p>
+    {% endif %}
 {% endblock %}

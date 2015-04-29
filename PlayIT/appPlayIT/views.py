@@ -2,6 +2,7 @@ from django.shortcuts import render, render_to_response
 from SpotifyAPI.spotify import SpotifyBrowser
 from django.contrib.auth.models import User
 from appPlayIT.models import *
+from django.http import Http404
 
 # Create your views here.
 def mainpage(request):
@@ -99,12 +100,16 @@ def track_list(request):
     )
 
 def track(request, track_id):
+    pubs = None
+    if request.user:
+        pubs = Pub.objects.filter(id__in=User.objects.get(username=request.user).user_pub_set.all())
     return render_to_response(
         'track.html',
         {
             'titlehead' : 'PlayIT - Add Track to Pub Playlist',
             'pagetitle' : 'Add a Spotify Track to a Pub Playlist',
             'user' : request.user,
+            'pubs' : pubs,
             'track' : SpotifyBrowser.get_track_by_id(track_id)
         }
     )
@@ -120,12 +125,16 @@ def get_pub_list(request):
     )
 
 def get_pub(request, pub_id):
+    try:
+        pub = Pub.objects.get(id=pub_id)
+    except:
+        raise Http404('Pub not found.')
     return render_to_response(
         'pub.html',
         {
             'titlehead' : 'PlayIT - View a Pub',
             'pagetitle' : 'View Pub detail',
-            'pub' : Pub.objects.get(id=pub_id),
+            'pub' : pub,
             'playlists' : Playlist.objects.filter(id_pub=pub_id)
         }
     )
@@ -140,12 +149,16 @@ def get_playlist_list(request):
         }
     )
 def get_playlist(request, playlist_id):
+    try:
+        playlist = Playlist.objects.get(id=playlist_id)
+    except:
+        raise Http404('Playlist not found.')
     return render_to_response(
         'playlist.html',
         {
             'titlehead' : 'PlayIT - View a Playlist',
             'pagetitle' : 'View Playlist Tracks',
-            'playlist' : Playlist.objects.get(id=playlist_id),
+            'playlist' : playlist,
             'tracks' : Track.objects.filter(playlist_track__in=Playlist_Track.objects.filter(id_playlist=playlist_id))
         }
     )
