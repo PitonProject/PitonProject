@@ -93,6 +93,16 @@ def browse(request):
         elif type == 'playlist':
             return browse_playlist(request, keyword, offset, limit, next_page)
 
+def track_list(request):
+    return render_to_response(
+        'track_list.html',
+        {
+            'titlehead' : 'PlayIT - View all registered Tracks',
+            'pagetitle' : 'View All Tracks',
+            'tracks' : Track.objects.all()
+        }
+    )
+
 def track(request, track_id):
     return render_to_response(
         'track.html',

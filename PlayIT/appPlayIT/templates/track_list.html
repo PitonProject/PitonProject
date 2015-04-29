@@ -1,6 +1,6 @@
 {% extends "basepage.html" %}
 {% block content %}
-    <p>Showing tracks of playlist: {{ playlist.name }}</p>
+    <p>Showing all registered tracks</p>
     <table style="width:100%" >
         <tr>
             <th>Name</th>
@@ -14,6 +14,7 @@
                 <td>{{ track.artist }}</td>
                 <td>{{ track.album }}</td>
                 <td>{{ track.spotify_id }}</td>
+                <td><a href="/track/{{ track.spotify_id }}">Show</a></td>
             </tr>
         {% endfor %}
     </table>
