@@ -17,5 +17,6 @@ urlpatterns = patterns('',
     url(r'^track/(\w+)/$', track),
     url(r'^pub/$', get_pub_list),
     url(r'^pub/(\w+)/$', get_pub),
+    url(r'^playlist/$', get_playlist_list),
     url(r'^playlist/(\w+)/$', get_playlist)
 )

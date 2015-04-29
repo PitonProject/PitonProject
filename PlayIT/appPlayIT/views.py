@@ -125,6 +125,15 @@ def get_pub(request, pub_id):
         }
     )
 
+def get_playlist_list(request):
+    return render_to_response(
+        'playlist_list.html',
+        {
+            'titlehead' : 'PlayIT - View Playlist List',
+            'pagetitle' : 'View All Playlists',
+            'playlists' : Playlist.objects.all()
+        }
+    )
 def get_playlist(request, playlist_id):
     return render_to_response(
         'playlist.html',
