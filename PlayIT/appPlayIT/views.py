@@ -114,3 +114,14 @@ def get_pub(request, pub_id):
             'playlists' : Playlist.objects.filter(id_pub=pub_id)
         }
     )
+
+def get_playlist(request, playlist_id):
+    return render_to_response(
+        'playlist.html',
+        {
+            'titlehead' : 'PlayIT - View a Playlist',
+            'pagetitle' : 'View Playlist Tracks',
+            'playlist' : Playlist.objects.get(id=playlist_id),
+            'tracks' : Track.objects.filter(playlist_track__in=Playlist_Track.objects.filter(id_playlist=playlist_id))
+        }
+    )

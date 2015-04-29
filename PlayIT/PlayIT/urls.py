@@ -15,5 +15,6 @@ urlpatterns = patterns('',
     url(r'^$', mainpage, name='home'),
     url(r'^browse$', browse),
     url(r'^track/(\w+)/$', track),
-    url(r'^pub/(\w+)/$', get_pub)
+    url(r'^pub/(\w+)/$', get_pub),
+    url(r'^playlist/(\w+)/$', get_playlist)
 )
