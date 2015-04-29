@@ -176,8 +176,8 @@ def get_pub(request, pub_id, format='html'):
         return render_to_response(
             'pub.html',
             {
-                'titlehead' : 'PlayIT - View a Pub',
-                'pagetitle' : 'View Pub detail',
+                'titlehead' : 'PlayIT - ' + pub.name,
+                'pagetitle' : 'View Pub: ' + pub.name,
                 'pub' : pub,
                 'playlists' : Playlist.objects.filter(id_pub=pub_id)
             }
@@ -224,9 +224,10 @@ def get_playlist(request, playlist_id, format='html'):
         return render_to_response(
             'playlist.html',
             {
-                'titlehead' : 'PlayIT - View a Playlist',
-                'pagetitle' : 'View Playlist Tracks',
+                'titlehead' : 'PlayIT - ' + playlist.name,
+                'pagetitle' : 'View Playlist: ' + playlist.name,
                 'playlist' : playlist,
-                'tracks' : Track.objects.filter(playlist_track__in=Playlist_Track.objects.filter(id_playlist=playlist_id))
+                'tracks' : Track.objects.filter(playlist_track__in=Playlist_Track.objects.filter(id_playlist=playlist_id)),
+                'pub' : playlist.id_pub
             }
         )

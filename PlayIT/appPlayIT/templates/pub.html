@@ -1,6 +1,7 @@
 {% extends "basepage.html" %}
 {% block content %}
     {% if playlists %}
+        <p>{{ pub.address }}, {{ pub.city }}</p>
         <p>Showing Playlists of Pub: {{ pub.name }}</p>
         <table style="width:100%" >
             <tr>
@@ -18,4 +19,5 @@
     {% else %}
         <p>Aquest pub no te playlists registrades!</p>
     {% endif %}
+    <p></p><a href="/pub">Veure tots els pubs</a></p>
 {% endblock %}
