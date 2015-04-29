@@ -8,7 +8,7 @@ from django.core import serializers
 # Create your views here.
 def mainpage(request):
     pubs = None
-    if request.user:
+    if request.user.is_authenticated():
         pubs = Pub.objects.filter(id__in=User.objects.get(username=request.user).user_pub_set.all())
     return render_to_response(
         'mainpage.html',
@@ -122,7 +122,7 @@ def track_list(request, format='html'):
 
 def track(request, track_id):
     pubs = None
-    if request.user:
+    if request.user.is_authenticated:
         pubs = Pub.objects.filter(id__in=User.objects.get(username=request.user).user_pub_set.all())
     return render_to_response(
         'track.html',
