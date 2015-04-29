@@ -2,7 +2,8 @@ from django.shortcuts import render, render_to_response
 from SpotifyAPI.spotify import SpotifyBrowser
 from django.contrib.auth.models import User
 from appPlayIT.models import *
-from django.http import Http404
+from django.http import Http404, HttpResponse
+from django.core import serializers
 
 # Create your views here.
 def mainpage(request):
@@ -89,15 +90,35 @@ def browse(request):
         elif type == 'playlist':
             return browse_playlist(request, keyword, offset, limit, next_page)
 
-def track_list(request):
-    return render_to_response(
-        'track_list.html',
-        {
-            'titlehead' : 'PlayIT - View all registered Tracks',
-            'pagetitle' : 'View All Tracks',
-            'tracks' : Track.objects.all()
-        }
-    )
+def render_json_response(objects):
+    json_data = serializers.serialize(u"json", objects)
+    return HttpResponse(json_data, content_type=u"application/json")
+
+def render_xml_response(objects):
+    json_data = serializers.serialize(u"xml", objects)
+    return HttpResponse(json_data, content_type=u"application/xml")
+
+def track_list_json(request):
+    return track_list(request, 'json')
+
+def track_list_xml(request):
+    return track_list(request, 'xml')
+
+def track_list(request, format='html'):
+    tracks = Track.objects.all()
+    if format == 'xml':
+        return render_xml_response(tracks)
+    elif format == 'json':
+        return render_json_response(tracks)
+    else:
+        return render_to_response(
+            'track_list.html',
+            {
+                'titlehead' : 'PlayIT - View all registered Tracks',
+                'pagetitle' : 'View All Tracks',
+                'tracks' : tracks
+            }
+        )
 
 def track(request, track_id):
     pubs = None
@@ -114,51 +135,98 @@ def track(request, track_id):
         }
     )
 
-def get_pub_list(request):
-    return render_to_response(
-        'pub_list.html',
-        {
-            'titlehead' : 'PlayIT - View Pub List',
-            'pagetitle' : 'View All Pubs',
-            'pubs' : Pub.objects.all()
-        }
-    )
+def get_pub_list_json(request):
+    return get_pub_list(request, 'json')
 
-def get_pub(request, pub_id):
+def get_pub_list_xml(request):
+    return get_pub_list(request, 'xml')
+
+def get_pub_list(request, format='html'):
+    pubs = Pub.objects.all()
+    if format == 'json':
+        return render_json_response(pubs)
+    elif format == 'xml':
+        return render_xml_response(pubs)
+    else:
+        return render_to_response(
+            'pub_list.html',
+            {
+                'titlehead' : 'PlayIT - View Pub List',
+                'pagetitle' : 'View All Pubs',
+                'pubs' : pubs
+            }
+        )
+
+def get_pub_json(request, pub_id):
+    return get_pub(request, pub_id, 'json')
+
+def get_pub_xml(request, pub_id):
+    return get_pub(request, pub_id, 'xml')
+
+def get_pub(request, pub_id, format='html'):
     try:
         pub = Pub.objects.get(id=pub_id)
     except:
         raise Http404('Pub not found.')
-    return render_to_response(
-        'pub.html',
-        {
-            'titlehead' : 'PlayIT - View a Pub',
-            'pagetitle' : 'View Pub detail',
-            'pub' : pub,
-            'playlists' : Playlist.objects.filter(id_pub=pub_id)
-        }
-    )
+    if format == 'json':
+        return render_json_response([pub,])
+    elif format == 'xml':
+        return render_xml_response([pub,])
+    else:
+        return render_to_response(
+            'pub.html',
+            {
+                'titlehead' : 'PlayIT - View a Pub',
+                'pagetitle' : 'View Pub detail',
+                'pub' : pub,
+                'playlists' : Playlist.objects.filter(id_pub=pub_id)
+            }
+        )
 
-def get_playlist_list(request):
-    return render_to_response(
-        'playlist_list.html',
-        {
-            'titlehead' : 'PlayIT - View Playlist List',
-            'pagetitle' : 'View All Playlists',
-            'playlists' : Playlist.objects.all()
-        }
-    )
-def get_playlist(request, playlist_id):
+def get_playlist_list_json(request):
+    return get_playlist_list(request, 'json')
+
+def get_playlist_list_xml(request):
+    return get_playlist_list(request, 'xml')
+
+def get_playlist_list(request, format='html'):
+    playlists = Playlist.objects.all()
+    if format == 'json':
+        return render_json_response(playlists)
+    elif format == 'xml':
+        return render_xml_response(playlists)
+    else:
+        return render_to_response(
+            'playlist_list.html',
+            {
+                'titlehead' : 'PlayIT - View Playlist List',
+                'pagetitle' : 'View All Playlists',
+                'playlists' : playlists
+            }
+        )
+
+def get_playlist_json(request, playlist_id):
+    return get_playlist(request, playlist_id, 'json')
+
+def get_playlist_xml(request, playlist_id):
+    return get_playlist(request, playlist_id, 'xml')
+
+def get_playlist(request, playlist_id, format='html'):
     try:
         playlist = Playlist.objects.get(id=playlist_id)
     except:
         raise Http404('Playlist not found.')
-    return render_to_response(
-        'playlist.html',
-        {
-            'titlehead' : 'PlayIT - View a Playlist',
-            'pagetitle' : 'View Playlist Tracks',
-            'playlist' : playlist,
-            'tracks' : Track.objects.filter(playlist_track__in=Playlist_Track.objects.filter(id_playlist=playlist_id))
-        }
-    )
+    if format == 'json':
+        return render_json_response([playlist,])
+    elif format == 'xml':
+        return render_xml_response([playlist,])
+    else:
+        return render_to_response(
+            'playlist.html',
+            {
+                'titlehead' : 'PlayIT - View a Playlist',
+                'pagetitle' : 'View Playlist Tracks',
+                'playlist' : playlist,
+                'tracks' : Track.objects.filter(playlist_track__in=Playlist_Track.objects.filter(id_playlist=playlist_id))
+            }
+        )
