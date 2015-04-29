@@ -104,6 +104,16 @@ def track(request, track_id):
         }
     )
 
+def get_pub_list(request):
+    return render_to_response(
+        'pub_list.html',
+        {
+            'titlehead' : 'PlayIT - View Pub List',
+            'pagetitle' : 'View All Pubs',
+            'pubs' : Pub.objects.all()
+        }
+    )
+
 def get_pub(request, pub_id):
     return render_to_response(
         'pub.html',
