@@ -1,22 +1,20 @@
 {% extends "browse.html" %}
 {% block results %}
-    {% if user.username %}
-        <p>Browsing playlist: {{ keyword }} on Spotify.</p>
-        <table style="width:100%" >
+    <p>Browsing playlist: {{ keyword }} on Spotify.</p>
+    <table style="width:100%" >
+        <tr>
+            <th>Name</th>
+            <th>id</th>
+            <th>Owner</th>
+        </tr>
+        {% for playlist in playlists.items %}
             <tr>
-                <th>Name</th>
-                <th>id</th>
-                <th>Owner</th>
+                <td>{{ playlist.name }}</td>
+                <td>{{ playlist.id }}</td>
+                <td>{{ playlist.owner.id }}</td>
             </tr>
-            {% for playlist in playlists.items %}
-                <tr>
-                    <td>{{ playlist.name }}</td>
-                    <td>{{ playlist.id }}</td>
-                    <td>{{ playlist.owner.id }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <p>Total results: {{ playlists.total }}. Max: {{ playlists.limit }}. Offset: {{ playlists.offset }}</p>
-        <p><a href="{{ next_page }}">Next page</a> </p>
-    {% endif %}
+        {% endfor %}
+    </table>
+    <p>Total results: {{ playlists.total }}. Max: {{ playlists.limit }}. Offset: {{ playlists.offset }}</p>
+    <p><a href="{{ next_page }}">Next page</a> </p>
 {% endblock %}
