@@ -3,7 +3,7 @@ Aplicació desenvolupada per <a href="https://github.com/sanchezfauste">Marc Sá
 
 Es tracta d'una aplicació que permet a un usuari seguir als seus pubs de preferència, consultar les playlists de música que aquest té associades i afegir-hi cançons. La idea principal, és que els usuaris d'un pub puguin escollir la música que volen que soni al pub.
 
-## API RESTfull
+## API RESTful
 <table>
   <tr>
     <th>Method</th>
