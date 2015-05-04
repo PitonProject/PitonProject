@@ -1,4 +1,9 @@
 # PitonProject
+Aplicació desenvolupada per <a href="https://github.com/sanchezfauste">Marc Sánchez</a> i <a href="https://github.com/ferranverdes">Ferran Verdés</a>
+
+Aquesta és una aplicació que permet a un usuari seguir als seus pubs de preferència, consultar les playlists de música que té associades i afegir-hi cançons. La idea, és que els usuaris d'un pub puguin escollir la música que volen que soni al pub.
+
+## API RestFull
 <table>
   <tr>
     <th>Method</th>
@@ -108,3 +113,8 @@
     <td>Llistat de tracks registrats en format XML</td>
   </tr>
 </table>
+
+## Panel d'administració
+En el projecte s'inclou una base de dades SQLite per a poder provar el projecte.
+Per accedir al panel d'administració s'ha d'accedir a `/admin`.
+L'usuari administrador és: `admin` amb password: `123456`
