@@ -183,6 +183,23 @@ def get_pub(request, pub_id, format='html'):
             }
         )
 
+def get_pub_playlists_json(request, pub_id):
+    return get_pub_playlists(request, pub_id, 'json')
+
+def get_pub_playlists_xml(request, pub_id):
+    return get_pub_playlists(request, pub_id, 'xml')
+
+def get_pub_playlists(requests, pub_id, format='html'):
+    try:
+        pub = Pub.objects.get(id=pub_id)
+        playlists = Playlist.objects.filter(id_pub=pub_id)
+    except:
+        raise Http404('Pub not found.')
+    if format == 'json':
+        return render_json_response(playlists)
+    elif format == 'xml':
+        return render_xml_response(playlists)
+
 def get_playlist_list_json(request):
     return get_playlist_list(request, 'json')
 
