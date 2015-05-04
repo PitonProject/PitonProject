@@ -30,5 +30,7 @@ urlpatterns = patterns('',
     url(r'^playlist.xml/$', get_playlist_list_xml),
     url(r'^playlist/(\w+)/$', get_playlist),
     url(r'^playlist/(\w+).json/$', get_playlist_json),
-    url(r'^playlist/(\w+).xml/$', get_playlist_xml)
+    url(r'^playlist/(\w+).xml/$', get_playlist_xml),
+    url(r'^playlist/(\w+)/track.json/$', get_playlist_tracks_json),
+    url(r'^playlist/(\w+)/track.xml/$', get_playlist_tracks_xml)
 )

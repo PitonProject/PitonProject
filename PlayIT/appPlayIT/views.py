@@ -231,3 +231,20 @@ def get_playlist(request, playlist_id, format='html'):
                 'pub' : playlist.id_pub
             }
         )
+
+def get_playlist_tracks(request, playlist_id, format='html'):
+    try:
+        playlist = Playlist.objects.get(id=playlist_id)
+        tracks = Track.objects.filter(playlist_track__in=Playlist_Track.objects.filter(id_playlist=playlist_id))
+    except:
+        raise Http404('Playlist not found.')
+    if format == 'json':
+        return render_json_response(tracks)
+    elif format == 'xml':
+        return render_xml_response(tracks)
+
+def get_playlist_tracks_json(request, playlist_id):
+    return get_playlist_tracks(request, playlist_id, 'json')
+
+def get_playlist_tracks_xml(request, playlist_id):
+    return get_playlist_tracks(request, playlist_id, 'xml')
