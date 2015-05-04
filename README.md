@@ -40,6 +40,17 @@
   
   <tr>
     <td>GET</td>
+    <td>/pub/id/playlist.json</td>
+    <td>Llistat de playlists que té registrades un pub en format Json</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/pub/id/playlist.xml</td>
+    <td>Llistat de playlists que té registrades un pub en format XML</td>
+  </tr>
+  
+  <tr>
+    <td>GET</td>
     <td>/playlist</td>
     <td>Llistat de playlists registrades en format HTML</td>
   </tr>
@@ -68,6 +79,17 @@
     <td>GET</td>
     <td>/playlist/id.xml</td>
     <td>Informació d'una playlist en format XML</td>
+  </tr>
+
+  <tr>
+    <td>GET</td>
+    <td>/playlist/id/track.json</td>
+    <td>Llistat de cançons que té una playlist en format Json</td>
+  </tr>  
+  <tr>
+    <td>GET</td>
+    <td>/playlist/id/track.xml</td>
+    <td>Llistat de cançons que té una playlist en format XML</td>
   </tr>
   
   <tr>
