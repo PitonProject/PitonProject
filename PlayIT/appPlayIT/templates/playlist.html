@@ -1,7 +1,7 @@
 {% extends "basepage.html" %}
 {% block content %}
     {% if tracks %}
-        <p>Playlist del pub: <a href="/pub/{{ pub.id }}">{{ pub.name }}</a></p>
+        <p>Playlist of pub: <a href="/pub/{{ pub.id }}">{{ pub.name }}</a></p>
         <p>Showing tracks:</p>
         <table style="width:100%" >
             <tr>
@@ -22,5 +22,5 @@
     {% else %}
         <p>This playlist is empty!</p>
     {% endif %}
-    <p></p><a href="/playlist">Veure totes les playlists</a></p>
+    <p></p><a href="/playlist">Show all playlists</a></p>
 {% endblock %}
