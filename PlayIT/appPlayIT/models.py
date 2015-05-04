@@ -42,7 +42,7 @@ class Track(models.Model):
     album = models.TextField()
     #spotify_album_id = models.TextField()
     def __unicode__(self):
-        return self.name
+        return self.name + " - " + self.artist
 
 class Playlist_Track(models.Model):
     id_playlist = models.ForeignKey(Playlist)
