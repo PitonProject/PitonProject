@@ -10,6 +10,8 @@ urlpatterns = patterns('',
     # url(r'^$', 'PlayIT.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    url(r'^api/', include('playItAPI.urls', namespace='playItAPI')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout'),

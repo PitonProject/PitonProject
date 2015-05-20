@@ -29,7 +29,7 @@ class User_Pub(models.Model):
 
 class Playlist(models.Model):
     #id_spotify_playlist = models.TextField(primary_key=True)
-    id_pub = models.ForeignKey(Pub)
+    id_pub = models.ForeignKey(Pub, related_name='playlists')
     name = models.TextField()
     def __unicode__(self):
         return self.name
