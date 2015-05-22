@@ -1,7 +1,7 @@
 {% extends "basepage.html" %}
 {% block content %}
     {% if user.username %}
-        <p>Welcome {{ user.username }}!</p>
+        <p>Welcome {{ user.username }}! <a href="/accounts/logout?next=/">Logout</a> </p>
         {% if pubs %}
             <p>List of user pubs:</p>
             <table style="width:100%" >
@@ -27,6 +27,6 @@
        {% endif %}
             <p><a href="/pub/create">Create a pub</a></p>
     {% else %}
-        <p><a href="/login/">Login</a> to access your registered pubs.</p>
+        <p><a href="/accounts/login/">Login</a> to access your registered pubs.</p>
     {% endif %}
 {% endblock %}

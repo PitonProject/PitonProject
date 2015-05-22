@@ -13,7 +13,7 @@ class Pub(models.Model):
     name = models.TextField()
     address = models.TextField()
     city = models.TextField()
-    #id_owner = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     def __unicode__(self):
         return self.name
     def get_absolute_url(self):

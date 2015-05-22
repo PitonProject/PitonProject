@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView, UpdateView
 from appPlayIT.forms import *
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 def mainpage(request):
@@ -277,7 +278,23 @@ class LoginRequiredMixin(object):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
 
 
+class CheckIsOwnerMixin(object):
+    def get_object(self, *args, **kwargs):
+        obj = super(CheckIsOwnerMixin, self).get_object(*args, **kwargs)
+        if not obj.user == self.request.user:
+            raise PermissionDenied
+        return obj
+
+
+class LoginRequiredCheckIsOwnerUpdateView(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
+    template_name = 'form.html'
+
+
 class PubCreate(LoginRequiredMixin, CreateView):
     model = Pub
     template_name = 'form.html'
     form_class = PubForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(PubCreate, self).form_valid(form)
