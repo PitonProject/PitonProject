@@ -6,7 +6,7 @@ from django.http import Http404, HttpResponse
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from appPlayIT.forms import *
 from django.core.exceptions import PermissionDenied
 
@@ -288,6 +288,10 @@ class CheckIsOwnerMixin(object):
 
 class LoginRequiredCheckIsOwnerUpdateView(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
     template_name = 'form.html'
+
+class LoginRequiredCheckIsOwnerDeleteView(LoginRequiredMixin, CheckIsOwnerMixin, DeleteView):
+    template_name = 'delete_form.html'
+    success_url = "/"
 
 
 class PubCreate(LoginRequiredMixin, CreateView):
