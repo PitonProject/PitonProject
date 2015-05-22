@@ -16,6 +16,8 @@ class Pub(models.Model):
     #id_owner = models.ForeignKey(User)
     def __unicode__(self):
         return self.name
+    def get_absolute_url(self):
+        return "/pub/" + str(self.pk)
 
 #class Client_Pub(models.Model):
  #   id_client = models.ForeignKey(Client, primary_key=True)

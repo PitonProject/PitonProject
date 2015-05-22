@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 from appPlayIT.models import *
 from django.http import Http404, HttpResponse
 from django.core import serializers
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic.edit import CreateView, UpdateView
+from appPlayIT.forms import *
 
 # Create your views here.
 def mainpage(request):
@@ -265,3 +269,15 @@ def get_playlist_tracks_json(request, playlist_id):
 
 def get_playlist_tracks_xml(request, playlist_id):
     return get_playlist_tracks(request, playlist_id, 'xml')
+
+
+class LoginRequiredMixin(object):
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+
+
+class PubCreate(LoginRequiredMixin, CreateView):
+    model = Pub
+    template_name = 'form.html'
+    form_class = PubForm

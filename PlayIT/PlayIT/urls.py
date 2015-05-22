@@ -4,6 +4,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from appPlayIT.views import *
+from appPlayIT.forms import *
 
 urlpatterns = patterns('',
     # Examples:
@@ -24,11 +25,12 @@ urlpatterns = patterns('',
     url(r'^pub/$', get_pub_list),
     url(r'^pub.json/$', get_pub_list_json),
     url(r'^pub.xml/$', get_pub_list_xml),
-    url(r'^pub/(\w+)/$', get_pub),
-    url(r'^pub/(\w+).xml/$', get_pub_xml),
-    url(r'^pub/(\w+).json/$', get_pub_json),
-    url(r'^pub/(\w+)/playlist.json/$', get_pub_playlists_json),
-    url(r'^pub/(\w+)/playlist.xml/$', get_pub_playlists_xml),
+    url(r'^pub/(\d+)/$', get_pub),
+    url(r'^pub/create/$', PubCreate.as_view(), name='pub_create'),
+    url(r'^pub/(\d+).xml/$', get_pub_xml),
+    url(r'^pub/(\d+).json/$', get_pub_json),
+    url(r'^pub/(\d+)/playlist.json/$', get_pub_playlists_json),
+    url(r'^pub/(\d+)/playlist.xml/$', get_pub_playlists_xml),
     url(r'^playlist/$', get_playlist_list),
     url(r'^playlist.json/$', get_playlist_list_json),
     url(r'^playlist.xml/$', get_playlist_list_xml),
