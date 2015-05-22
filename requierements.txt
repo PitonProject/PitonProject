@@ -1,4 +1,7 @@
 Django==1.7.7
 argparse==1.2.1
+defusedxml==0.4.1
+djangorestframework==3.1.2
+djangorestframework-xml==1.0.1
 requests==2.6.0
 wsgiref==0.1.2
