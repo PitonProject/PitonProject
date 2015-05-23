@@ -320,7 +320,7 @@ class PlaylistCreate(LoginRequiredMixin, CreateView):
 def add_track_to_playlist(request, pk, pkr):
     try: # Track is already in playlist
         playlist_track = Playlist_Track.objects.get(id_playlist = pkr, id_track = pk)
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect("/playlist/" + str(pkr))
     except:
         pass
     playlist = get_object_or_404(Playlist, pk=pkr)
@@ -345,4 +345,17 @@ def add_track_to_playlist(request, pk, pkr):
         id_track = track,
         id_user = request.user)
     new_playlist_track.save()
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect("/playlist/" + str(pkr))
+
+@login_required()
+def remove_track_from_playlist(request, pk, pkr):
+    playlist_track = None
+    try: # Track is already in playlist
+        playlist_track = Playlist_Track.objects.get(id_playlist = pkr, id_track = pk)
+    except:
+        raise Http404('Track not found on this playlist!')
+    if request.user == playlist_track.id_user:
+        playlist_track.delete()
+    else:
+        raise PermissionDenied
+    return HttpResponseRedirect("/playlist/" + str(pkr))
