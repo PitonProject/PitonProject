@@ -15,7 +15,7 @@ from django.shortcuts import get_object_or_404
 def mainpage(request):
     pubs = None
     if request.user.is_authenticated():
-        pubs = Pub.objects.filter(id__in=User.objects.get(username=request.user).user_pub_set.all())
+        pubs = Pub.objects.filter(user_pub__in=User_Pub.objects.filter(id_user=request.user))
     return render_to_response(
         'mainpage.html',
         {
@@ -359,3 +359,22 @@ def remove_track_from_playlist(request, pk, pkr):
     else:
         raise PermissionDenied
     return HttpResponseRedirect("/playlist/" + str(pkr))
+
+@login_required()
+def follow_pub(request, pk):
+    try:
+        user_pub = User_Pub.objects.get(id_user = request.user, id_pub = pk)
+    except:
+        pub = get_object_or_404(Pub, id = pk)
+        user_pub = User_Pub(id_user = request.user, id_pub = pub)
+        user_pub.save()
+    return HttpResponseRedirect("/")
+
+@login_required()
+def unfollow_pub(request, pk):
+    try:
+        user_pub = User_Pub.objects.get(id_user = request.user, id_pub = pk)
+        user_pub.delete()
+    except:
+        raise Http404('Pub not found on your follow list!')
+    return HttpResponseRedirect("/")
