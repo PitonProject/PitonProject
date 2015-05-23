@@ -2,13 +2,14 @@ from django.shortcuts import render, render_to_response
 from SpotifyAPI.spotify import SpotifyBrowser
 from django.contrib.auth.models import User
 from appPlayIT.models import *
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from appPlayIT.forms import *
 from django.core.exceptions import PermissionDenied
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def mainpage(request):
@@ -313,3 +314,35 @@ class PlaylistCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         form.instance.id_pub = Pub.objects.get(id=self.kwargs['pk'])
         return super(PlaylistCreate, self).form_valid(form)
+
+
+@login_required()
+def add_track_to_playlist(request, pk, pkr):
+    try: # Track is already in playlist
+        playlist_track = Playlist_Track.objects.get(id_playlist = pkr, id_track = pk)
+        return HttpResponseRedirect("/")
+    except:
+        pass
+    playlist = get_object_or_404(Playlist, pk=pkr)
+    track = None
+    try:
+        track = Track.objects.get(spotify_id = pk)
+    except:
+        spotify_track = SpotifyBrowser.get_track_by_id(pk)
+        if "id" in spotify_track:
+            print spotify_track["id"]
+            track = Track(
+                spotify_id = pk,
+                name = spotify_track["name"],
+                artist = spotify_track["artists"][0]["name"],
+                album = spotify_track["album"]["name"]
+            )
+            track.save()
+        else:
+            raise Http404('Track not found.')
+    new_playlist_track = Playlist_Track(
+        id_playlist = playlist,
+        id_track = track,
+        id_user = request.user)
+    new_playlist_track.save()
+    return HttpResponseRedirect("/")
