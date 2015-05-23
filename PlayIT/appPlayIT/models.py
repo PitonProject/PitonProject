@@ -33,8 +33,11 @@ class Playlist(models.Model):
     #id_spotify_playlist = models.TextField(primary_key=True)
     id_pub = models.ForeignKey(Pub, related_name='playlists')
     name = models.TextField()
+    user = models.ForeignKey(User)
     def __unicode__(self):
         return self.name
+    def get_absolute_url(self):
+        return "/playlist/" + str(self.pk)
 
 class Track(models.Model):
     spotify_id = models.TextField(primary_key=True)

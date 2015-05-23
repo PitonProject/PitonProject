@@ -302,3 +302,14 @@ class PubCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(PubCreate, self).form_valid(form)
+
+
+class PlaylistCreate(LoginRequiredMixin, CreateView):
+    model = Playlist
+    template_name = 'form.html'
+    form_class = PlaylistForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.id_pub = Pub.objects.get(id=self.kwargs['pk'])
+        return super(PlaylistCreate, self).form_valid(form)

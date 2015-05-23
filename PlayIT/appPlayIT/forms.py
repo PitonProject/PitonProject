@@ -9,7 +9,7 @@ class PubForm(ModelForm):
 class PlaylistForm(ModelForm):
     class Meta:
         model = Playlist
-        exclude = ('id_pub',)
+        exclude = ('id_pub', 'user')
 
 class TrackForm(ModelForm):
     class Meta:
