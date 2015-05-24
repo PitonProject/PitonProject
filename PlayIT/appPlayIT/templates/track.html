@@ -5,21 +5,28 @@
     <p>Artist: {{ track.artists.0.name }}</p>
     <p>Album: {{ track.album.name }}</p>
     {% if user.username %}
-        {% if pubs %}
+        {% if pub_playlists %}
             <p>List of user pubs:</p>
-            <table style="width:100%" >
-                <tr>
-                    <th>Name</th>
-                </tr>
-                {% for pub in pubs %}
-                    <tr>
-                        <td>{{ pub.name }}</td>
-                        <td><a href="">Add song to this pub</a></td>
-                    </tr>
+                {% for pub_playlist in pub_playlists %}
+                    {% with pub=pub_playlist.0 %}
+                    <p>{{ pub.name }}</p>
+                    <table style="width:100%" >
+                        <tr>
+                            <th>id</th>
+                            <th>Name</th>
+                        </tr>
+                        {% for playlist in pub_playlist.1 %}
+                            <tr>
+                                <td>{{ playlist.id }}</td>
+                                <td>{{ playlist.name }}</td>
+                                <td><a href="/pub/{{ pub.id }}/playlist/{{ playlist.id }}/add_track/{{ track.id }}">Add song in this playlist</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    {% endwith %}
                 {% endfor %}
-            </table>
            {% else %}
-                <p>You have no registered pubs!</p>
+                <p>Your registered pubs has no playlists!</p>
            {% endif %}
     {% endif %}
     {% block results %}

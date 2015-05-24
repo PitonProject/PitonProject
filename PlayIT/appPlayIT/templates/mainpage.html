@@ -18,14 +18,15 @@
                         <td>{{ pub.address }}</td>
                         <td>{{ pub.city }}</td>
                         <td><a href="/pub/{{ pub.id }}">Show</a></td>
-                        <td><a href="">Remove</a></td>
+                        <td><a href="/unfollow_pub/{{ pub.id }}">Unfollow</a></td>
                     </tr>
                 {% endfor %}
             </table>
        {% else %}
             <p>This user has no registered pubs.</p>
        {% endif %}
-            <p><a href="/pub/create">Create a pub</a></p>
+        <p><a href="/pub">Show all pubs</a></p>
+        <p><a href="/pub/create">Create a pub</a></p>
     {% else %}
         <p><a href="/accounts/login/">Login</a> to access your registered pubs.</p>
     {% endif %}

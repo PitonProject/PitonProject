@@ -128,8 +128,13 @@ def track_list(request, format='html'):
 
 def track(request, track_id):
     pubs = None
+    pub_playlists = []
     if request.user.is_authenticated:
-        pubs = Pub.objects.filter(id__in=User.objects.get(username=request.user).user_pub_set.all())
+        pubs = Pub.objects.filter(user_pub__in=User_Pub.objects.filter(id_user=request.user))
+        for pub in pubs:
+            playlists = Playlist.objects.filter(id_pub = pub.id)
+            if len(playlists) > 0:
+                pub_playlists.append((pub, playlists))
     return render_to_response(
         'track.html',
         {
@@ -137,6 +142,7 @@ def track(request, track_id):
             'pagetitle' : 'Add a Spotify Track to a Pub Playlist',
             'user' : request.user,
             'pubs' : pubs,
+            'pub_playlists': pub_playlists,
             'track' : SpotifyBrowser.get_track_by_id(track_id)
         }
     )
@@ -179,12 +185,20 @@ def get_pub(request, pub_id, format='html'):
     elif format == 'xml':
         return render_xml_response([pub,])
     else:
+        user_follow_pub = 0 # User not authenticated
+        if request.user.is_authenticated():
+            try:
+                user_pub = User_Pub.objects.get(id_user = request.user, id_pub = pub)
+                user_follow_pub = 1 # User follow pub
+            except:
+                user_follow_pub = 2 # User authenticated, user don't follow pub
         return render_to_response(
             'pub.html',
             {
                 'titlehead' : 'PlayIT - ' + pub.name,
                 'pagetitle' : 'View Pub: ' + pub.name,
                 'pub' : pub,
+                'user_follow_pub': user_follow_pub,
                 'playlists' : Playlist.objects.filter(id_pub=pub_id)
             }
         )
@@ -244,6 +258,10 @@ def get_playlist(request, playlist_id, format='html'):
     elif format == 'xml':
         return render_xml_response([playlist,])
     else:
+        user_is_owner = False
+        if request.user.is_authenticated():
+            if playlist.user == request.user:
+                user_is_owner = True
         return render_to_response(
             'playlist.html',
             {
@@ -251,7 +269,8 @@ def get_playlist(request, playlist_id, format='html'):
                 'pagetitle' : 'View Playlist: ' + playlist.name,
                 'playlist' : playlist,
                 'tracks' : Track.objects.filter(playlist_track__in=Playlist_Track.objects.filter(id_playlist=playlist_id)),
-                'pub' : playlist.id_pub
+                'pub' : playlist.id_pub,
+                'user_is_owner': user_is_owner
             }
         )
 
@@ -368,7 +387,7 @@ def follow_pub(request, pk):
         pub = get_object_or_404(Pub, id = pk)
         user_pub = User_Pub(id_user = request.user, id_pub = pub)
         user_pub.save()
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect("/pub/" + str(pk))
 
 @login_required()
 def unfollow_pub(request, pk):
@@ -377,4 +396,4 @@ def unfollow_pub(request, pk):
         user_pub.delete()
     except:
         raise Http404('Pub not found on your follow list!')
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect("/pub/" + str(pk))

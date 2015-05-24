@@ -1,5 +1,10 @@
 {% extends "basepage.html" %}
 {% block content %}
+    {% if user_follow_pub == 1 %}
+        <p><a href="/unfollow_pub/{{ pub.id }}">Unfollow</a></p>
+    {% elif user_follow_pub == 2 %}
+        <p><a href="/follow_pub/{{ pub.id }}">Follow</a></p>
+    {% endif %}
     {% if playlists %}
         <p>{{ pub.address }}, {{ pub.city }}</p>
         <p>Showing Playlists of Pub: {{ pub.name }}</p>
@@ -18,6 +23,9 @@
         </table>
     {% else %}
         <p>This pub has no registered playlists!</p>
+    {% endif %}
+    {% if user_follow_pub != 0 %}
+        <p></p><a href="/pub/{{ pub.id }}/playlist/create">Create a playlist</a></p>
     {% endif %}
     <p></p><a href="/pub">Show all pubs</a></p>
 {% endblock %}

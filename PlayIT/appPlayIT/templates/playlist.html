@@ -1,7 +1,11 @@
 {% extends "basepage.html" %}
 {% block content %}
+    <p>Playlist of pub: <a href="/pub/{{ pub.id }}">{{ pub.name }}</a></p>
+    {% if user_is_owner %}
+        <p></p><a href="/pub/{{ pub.id }}/playlist/{{ playlist.id }}/edit">Edit playlist</a></p>
+        <p></p><a href="/pub/{{ pub.id }}/playlist/{{ playlist.id }}/delete">Delete playlist</a></p>
+    {% endif %}
     {% if tracks %}
-        <p>Playlist of pub: <a href="/pub/{{ pub.id }}">{{ pub.name }}</a></p>
         <p>Showing tracks:</p>
         <table style="width:100%" >
             <tr>
@@ -16,6 +20,9 @@
                     <td>{{ track.artist }}</td>
                     <td>{{ track.album }}</td>
                     <td>{{ track.spotify_id }}</td>
+                    {% if user_is_owner %}
+                        <td><a href="/pub/{{ pub.id }}/playlist/{{ playlist.id }}/remove_track/{{ track.spotify_id }}">Remove track</a></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>
