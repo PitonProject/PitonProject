@@ -14,14 +14,12 @@
                 <th>Name</th>
                 <th>Artist</th>
                 <th>Album</th>
-                <th>id</th>
             </tr>
             {% for track in tracks %}
                 <tr>
                     <td>{{ track.name }}</td>
                     <td>{{ track.artist }}</td>
                     <td>{{ track.album }}</td>
-                    <td>{{ track.spotify_id }}</td>
                     {% if user_is_owner %}
                         <td><a href="/pub/{{ pub.id }}/playlist/{{ playlist.id }}/remove_track/{{ track.spotify_id }}">Remove track</a></td>
                     {% endif %}

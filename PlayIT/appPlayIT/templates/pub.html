@@ -14,19 +14,11 @@
     <h3>{{ pub.address }} - {{ pub.city }}</h3>
     {% if playlists %}
         <h2>Showing Playlists of Pub: {{ pub.name }}</h2>
-        <table style="width:100%" >
-            <tr>
-                <th>id</th>
-                <th>Name</th>
-            </tr>
+        <ul>
             {% for playlist in playlists %}
-                <tr>
-                    <td>{{ playlist.id }}</td>
-                    <td>{{ playlist.name }}</td>
-                    <td><a href="/playlist/{{ playlist.id }}">Show</a></td>
-                </tr>
+                <li><h2><a href="/playlist/{{ playlist.id }}">{{ playlist.name }}</a></h2></li>
             {% endfor %}
-        </table>
+        </ul>
     {% else %}
         <h2>This pub has no registered playlists!</h2>
     {% endif %}

@@ -4,24 +4,14 @@
     {% if user.username %}
         {% if pubs %}
             <h1>List of user pubs</h1>
-            <table style="width:100%" >
-                <tr>
-                    <th>id</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>City</th>
-                </tr>
+            <ul>
                 {% for pub in pubs %}
-                    <tr>
-                        <td>{{ pub.id }}</td>
-                        <td>{{ pub.name }}</td>
-                        <td>{{ pub.address }}</td>
-                        <td>{{ pub.city }}</td>
-                        <td><a href="/pub/{{ pub.id }}">Show</a></td>
-                        <td><a href="/unfollow_pub/{{ pub.id }}">Unfollow</a></td>
+                    <li><h2><a href="/pub/{{ pub.id }}">{{ pub.name }}</a></h2></li>
+                        <h3>{{ pub.address }} - {{ pub.city }}</h3>
                     </tr>
                 {% endfor %}
             </table>
+            </ul>
        {% else %}
             <h2>This user has no registered pubs</h2>
        {% endif %}

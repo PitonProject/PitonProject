@@ -20,5 +20,7 @@
         {% endfor %}
     </table>
     <h3>Total results: {{ tracks.total }}. Max: {{ tracks.limit }}. Offset: {{ tracks.offset }}</h3>
-    <p><a href="{{ next_page }}">Next page</a> </p>
+    {% if tracks.next %}
+        <p><a href="{{ next_page }}">Next page</a> </p>
+    {% endif %}
 {% endblock %}
