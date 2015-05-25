@@ -1,7 +1,8 @@
 {% extends "basepage.html" %}
+{% block title %}PlayIT - Tracks{% endblock %}
 {% block content %}
+    <h1>Tracks</h1>
     {% if tracks %}
-        <p>Showing all registered tracks</p>
         <table style="width:100%" >
             <tr>
                 <th>Name</th>
@@ -15,11 +16,11 @@
                     <td>{{ track.artist }}</td>
                     <td>{{ track.album }}</td>
                     <td>{{ track.spotify_id }}</td>
-                    <td><a href="/track/{{ track.spotify_id }}">Show</a></td>
+                    <td><a href="/track/{{ track.spotify_id }}">Add to playlist</a></td>
                 </tr>
             {% endfor %}
         </table>
     {% else %}
-        <p>There are no registered pubs!</p>
+        <h2>There are no registered tracks!</h2>
     {% endif %}
 {% endblock %}

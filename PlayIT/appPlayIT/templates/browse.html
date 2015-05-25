@@ -1,6 +1,7 @@
 {% extends "basepage.html" %}
+{% block title %}PlayIT - Browse{% endblock %}
 {% block content %}
-    <p>Buscar a Spotify</p>
+    <h1>Search on Spotify</h1>
     <form method="get" action="/browse">
         <input type="search" name="keyword" />
         <select name="type">
@@ -8,7 +9,7 @@
             <option value="artist">Artist</option>
             <option value="album">Album</option>
             <option value="playlist">Playlist</option>
-        <input type="submit" value="Buscar"/>
+        <input type="submit" value="Search"/>
     </form>
     {% block results %}
 	{% endblock %}

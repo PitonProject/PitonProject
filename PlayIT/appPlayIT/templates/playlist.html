@@ -1,12 +1,14 @@
 {% extends "basepage.html" %}
+{% block title %}PlayIT - {{ pub.name }} - {{ playlist.name }}{% endblock %}
 {% block content %}
-    <p>Playlist of pub: <a href="/pub/{{ pub.id }}">{{ pub.name }}</a></p>
+    <h1>{{ pub.name }} - {{ playlist.name }}
     {% if user_is_owner %}
-        <p></p><a href="/pub/{{ pub.id }}/playlist/{{ playlist.id }}/edit">Edit playlist</a></p>
-        <p></p><a href="/pub/{{ pub.id }}/playlist/{{ playlist.id }}/delete">Delete playlist</a></p>
-    {% endif %}
+        <a href="/pub/{{ pub.id }}/playlist/{{ playlist.id }}/edit"> (edit)</a>
+        <a href="/pub/{{ pub.id }}/playlist/{{ playlist.id }}/delete"> (remove)</a>
+    {% endif %}</h1>
+    <h2>Playlist of pub: <a href="/pub/{{ pub.id }}">{{ pub.name }}</a></h2>
     {% if tracks %}
-        <p>Showing tracks:</p>
+        <h2>Showing tracks:</h2>
         <table style="width:100%" >
             <tr>
                 <th>Name</th>
@@ -27,7 +29,6 @@
             {% endfor %}
         </table>
     {% else %}
-        <p>This playlist is empty!</p>
+        <h3>This playlist is empty!</h3>
     {% endif %}
-    <p></p><a href="/playlist">Show all playlists</a></p>
 {% endblock %}

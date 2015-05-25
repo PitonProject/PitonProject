@@ -1,13 +1,19 @@
 {% extends "basepage.html" %}
+{% block title %}PlayIT - {{ pub.name }}{% endblock %}
 {% block content %}
+    <h1>{{ pub.name }}
     {% if user_follow_pub == 1 %}
-        <p><a href="/unfollow_pub/{{ pub.id }}">Unfollow</a></p>
+        <a href="/unfollow_pub/{{ pub.id }}"> (Unfollow)</a>
     {% elif user_follow_pub == 2 %}
-        <p><a href="/follow_pub/{{ pub.id }}">Follow</a></p>
+        <a href="/follow_pub/{{ pub.id }}"> (Follow)</a>
     {% endif %}
+    {% if user_is_owner %}
+        <a href="/pub/{{ pub.id }}/edit"> (edit)</a>
+        <a href="/pub/{{ pub.id }}/delete"> (remove)</a>
+    {% endif %}</h1>
+    <h3>{{ pub.address }} - {{ pub.city }}</h3>
     {% if playlists %}
-        <p>{{ pub.address }}, {{ pub.city }}</p>
-        <p>Showing Playlists of Pub: {{ pub.name }}</p>
+        <h2>Showing Playlists of Pub: {{ pub.name }}</h2>
         <table style="width:100%" >
             <tr>
                 <th>id</th>
@@ -22,10 +28,9 @@
             {% endfor %}
         </table>
     {% else %}
-        <p>This pub has no registered playlists!</p>
+        <h2>This pub has no registered playlists!</h2>
     {% endif %}
     {% if user_follow_pub != 0 %}
         <p></p><a href="/pub/{{ pub.id }}/playlist/create">Create a playlist</a></p>
     {% endif %}
-    <p></p><a href="/pub">Show all pubs</a></p>
 {% endblock %}

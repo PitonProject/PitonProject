@@ -1,6 +1,7 @@
 {% extends "browse.html" %}
+{% block title %}PlayIT - {{ keyword }}{% endblock %}
 {% block results %}
-    <p>Browsing track: {{ keyword }} on Spotify.</p>
+    <h2>Tracks containing: {{ keyword }}</h2>
     <table style="width:100%" >
         <tr>
             <th>Name</th>
@@ -18,6 +19,6 @@
             </tr>
         {% endfor %}
     </table>
-    <p>Total results: {{ tracks.total }}. Max: {{ tracks.limit }}. Offset: {{ tracks.offset }}</p>
+    <h3>Total results: {{ tracks.total }}. Max: {{ tracks.limit }}. Offset: {{ tracks.offset }}</h3>
     <p><a href="{{ next_page }}">Next page</a> </p>
 {% endblock %}

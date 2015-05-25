@@ -1,9 +1,9 @@
 {% extends "basepage.html" %}
+{% block title %}PlayIT - Home{% endblock %}
 {% block content %}
     {% if user.username %}
-        <p>Welcome {{ user.username }}! <a href="/accounts/logout?next=/">Logout</a> </p>
         {% if pubs %}
-            <p>List of user pubs:</p>
+            <h1>List of user pubs</h1>
             <table style="width:100%" >
                 <tr>
                     <th>id</th>
@@ -23,11 +23,9 @@
                 {% endfor %}
             </table>
        {% else %}
-            <p>This user has no registered pubs.</p>
+            <h2>This user has no registered pubs</h2>
        {% endif %}
-        <p><a href="/pub">Show all pubs</a></p>
-        <p><a href="/pub/create">Create a pub</a></p>
     {% else %}
-        <p><a href="/accounts/login/">Login</a> to access your registered pubs.</p>
+        <h2><a href="/accounts/login/">Login</a> to access your registered pubs</h2>
     {% endif %}
 {% endblock %}

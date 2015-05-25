@@ -1,7 +1,8 @@
 {% extends "basepage.html" %}
+{% block title %}PlayIT - Playlists{% endblock %}
 {% block content %}
+    <h1>Playlists</h1>
     {% if playlists %}
-        <p>Showing all registered playlists</p>
         <table style="width:100%" >
             <tr>
                 <th>id</th>
@@ -16,6 +17,6 @@
             {% endfor %}
         </table>
     {% else %}
-        <p>There are no registered playlists!</p>
+        <h2>There are no registered playlists!</h2>
     {% endif %}
 {% endblock %}

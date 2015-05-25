@@ -1,15 +1,15 @@
 {% extends "basepage.html" %}
+{% block title %}PlayIT - {{ track.name }}{% endblock %}
 {% block content %}
-    <p>Id track Spotify: {{ track.id }}</p>
-    <p>Track name: {{ track.name }}</p>
-    <p>Artist: {{ track.artists.0.name }}</p>
-    <p>Album: {{ track.album.name }}</p>
+    <h1>{{ track.name }} - {{ track.artists.0.name }}</h1>
+    <h3>Album: {{ track.album.name }}</h3>
+    <h3>Id track Spotify: {{ track.id }}</h3>
     {% if user.username %}
         {% if pub_playlists %}
-            <p>List of user pubs:</p>
+            <h2>List of user pubs:</h2>
                 {% for pub_playlist in pub_playlists %}
                     {% with pub=pub_playlist.0 %}
-                    <p>{{ pub.name }}</p>
+                    <h3>{{ pub.name }}</h3>
                     <table style="width:100%" >
                         <tr>
                             <th>id</th>
@@ -19,14 +19,14 @@
                             <tr>
                                 <td>{{ playlist.id }}</td>
                                 <td>{{ playlist.name }}</td>
-                                <td><a href="/pub/{{ pub.id }}/playlist/{{ playlist.id }}/add_track/{{ track.id }}">Add song in this playlist</a></td>
+                                <td><a href="/pub/{{ pub.id }}/playlist/{{ playlist.id }}/add_track/{{ track.id }}">Add song to this playlist</a></td>
                             </tr>
                         {% endfor %}
                     </table>
                     {% endwith %}
                 {% endfor %}
            {% else %}
-                <p>Your registered pubs has no playlists!</p>
+                <h2>Your registered pubs has no playlists!</h2>
            {% endif %}
     {% endif %}
     {% block results %}
