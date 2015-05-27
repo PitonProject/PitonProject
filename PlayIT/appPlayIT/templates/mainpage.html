@@ -7,10 +7,8 @@
             <ul>
                 {% for pub in pubs %}
                     <li><h2><a href="/pub/{{ pub.id }}">{{ pub.name }}</a></h2></li>
-                        <h3>{{ pub.address }} - {{ pub.city }}</h3>
-                    </tr>
+                    <h3>{{ pub.street }}, {{ pub.number }} - {{ pub.city }}</h3>
                 {% endfor %}
-            </table>
             </ul>
        {% else %}
             <h2>This user has no registered pubs</h2>

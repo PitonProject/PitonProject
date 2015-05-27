@@ -25,3 +25,11 @@ textarea, input[type=number], input[type=url]
     height: 1.25em;
     width: 25em;
 }
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+}

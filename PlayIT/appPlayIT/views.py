@@ -23,47 +23,51 @@ def mainpage(request):
                 'pubs' : pubs
         })
 
-def browse_track(request, keyword, offset, limit, next_page):
+def browse_track(request, keyword, offset, limit, next_page, previous_page):
     return render_to_response(
         'browse_track.html',
         {
             'user': request.user,
             'keyword' : keyword,
             'tracks' : SpotifyBrowser.search_track(keyword, offset, limit)["tracks"],
-            'next_page' : next_page
+            'next_page' : next_page,
+            'previous_page': previous_page
         }
     )
 
-def browse_artist(request, keyword, offset, limit, next_page):
+def browse_artist(request, keyword, offset, limit, next_page, previous_page):
     return render_to_response(
         'browse_artist.html',
         {
             'user': request.user,
             'keyword' : keyword,
             'artists' : SpotifyBrowser.search_artist(keyword, offset, limit)["artists"],
-            'next_page' : next_page
+            'next_page' : next_page,
+            'previous_page' : previous_page
         }
     )
 
-def browse_album(request, keyword, offset, limit, next_page):
+def browse_album(request, keyword, offset, limit, next_page, previous_page):
     return render_to_response(
         'browse_album.html',
         {
             'user': request.user,
             'keyword' : keyword,
             'albums' : SpotifyBrowser.search_album(keyword, offset, limit)["albums"],
-            'next_page' : next_page
+            'next_page' : next_page,
+            'previous_page' : previous_page
         }
     )
 
-def browse_playlist(request, keyword, offset, limit, next_page):
+def browse_playlist(request, keyword, offset, limit, next_page, previous_page):
     return render_to_response(
         'browse_playlist.html',
         {
             'user': request.user,
             'keyword' : keyword,
             'playlists' : SpotifyBrowser.search_playlist(keyword, offset, limit)["playlists"],
-            'next_page' : next_page
+            'next_page' : next_page,
+            'previous_page' : previous_page
         }
     )
 
@@ -80,14 +84,15 @@ def browse(request):
             })
     else:
         next_page = "/browse?keyword=" + keyword + "&type=" + type + "&limit=" + str(limit) + "&offset=" + str(offset+limit)
+        previous_page = "/browse?keyword=" + keyword + "&type=" + type + "&limit=" + str(limit) + "&offset=" + str(offset-limit)
         if type == 'track':
-            return browse_track(request, keyword, offset, limit, next_page)
+            return browse_track(request, keyword, offset, limit, next_page, previous_page)
         elif type == 'artist':
-            return browse_artist(request, keyword, offset, limit, next_page)
+            return browse_artist(request, keyword, offset, limit, next_page, previous_page)
         elif type == 'album':
-            return browse_album(request, keyword, offset, limit, next_page)
+            return browse_album(request, keyword, offset, limit, next_page, previous_page)
         elif type == 'playlist':
-            return browse_playlist(request, keyword, offset, limit, next_page)
+            return browse_playlist(request, keyword, offset, limit, next_page, previous_page)
 
 def render_json_response(objects):
     json_data = serializers.serialize(u"json", objects)

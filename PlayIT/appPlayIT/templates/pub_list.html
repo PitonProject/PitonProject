@@ -3,24 +3,12 @@
 {% block content %}
     <h1>Pubs</h1>
     {% if pubs %}
-        <table style="width:100%" >
-            <tr>
-                <th>id</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>City</th>
-
-            </tr>
+        <ul>
             {% for pub in pubs %}
-                <tr>
-                    <td>{{ pub.id }}</td>
-                    <td>{{ pub.name }}</td>
-                    <td>{{ pub.address }}</td>
-                    <td>{{ pub.city }}</td>
-                    <td><a href="/pub/{{ pub.id }}">Show</a></td>
-                </tr>
+                <li><h2><a href="/pub/{{ pub.id }}">{{ pub.name }}</a></h2></li>
+                    <h3>{{ pub.street }}, {{ pub.number }} - {{ pub.city }}</h3>
             {% endfor %}
-        </table>
+        </ul>
     {% else %}
         <h2>There are no registered pubs!</h2>
     {% endif %}

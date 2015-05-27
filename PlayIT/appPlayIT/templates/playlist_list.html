@@ -3,19 +3,11 @@
 {% block content %}
     <h1>Playlists</h1>
     {% if playlists %}
-        <table style="width:100%" >
-            <tr>
-                <th>id</th>
-                <th>Name</th>
-            </tr>
-            {% for playlist in playlists %}
-                <tr>
-                    <td>{{ playlist.id }}</td>
-                    <td>{{ playlist.name }}</td>
-                    <td><a href="/playlist/{{ playlist.id }}">Show</a></td>
-                </tr>
-            {% endfor %}
-        </table>
+            <ul>
+                {% for playlist in playlists %}
+                    <li><h2><a href="/playlist/{{ playlist.id }}">{{ playlist.name }}</a></h2></li>
+                {% endfor %}
+            </ul>
     {% else %}
         <h2>There are no registered playlists!</h2>
     {% endif %}

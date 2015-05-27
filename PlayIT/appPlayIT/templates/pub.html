@@ -1,5 +1,6 @@
 {% extends "basepage.html" %}
 {% block title %}PlayIT - {{ pub.name }}{% endblock %}
+{% block footer %}Created by {{ pub.user }}{% endblock %}
 {% block content %}
     <h1>{{ pub.name }}
     {% if user_follow_pub == 1 %}
@@ -11,7 +12,7 @@
         <a href="/pub/{{ pub.id }}/edit"> (edit)</a>
         <a href="/pub/{{ pub.id }}/delete"> (remove)</a>
     {% endif %}</h1>
-    <h3>{{ pub.address }} - {{ pub.city }}</h3>
+    <h3>{{ pub.street }}, {{ pub.number }} - {{ pub.city }}</h3>
     {% if playlists %}
         <h2>Showing Playlists of Pub: {{ pub.name }}</h2>
         <ul>
@@ -23,6 +24,6 @@
         <h2>This pub has no registered playlists!</h2>
     {% endif %}
     {% if user_follow_pub != 0 %}
-        <p></p><a href="/pub/{{ pub.id }}/playlist/create">Create a playlist</a></p>
+        <p></p><a href="/pub/{{ pub.id }}/playlist/create"><button>Create a playlist</button></a></p>
     {% endif %}
 {% endblock %}

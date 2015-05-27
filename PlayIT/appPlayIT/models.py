@@ -1,27 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-#class Client(models.Model):
- #   username = models.TextField(primary_key=True)
-  #  password = models.TextField()
-   # name = models.TextField()
-    #surname = models.TextField(null=True)
-    #email = models.EmailField()
-
 class Pub(models.Model):
-    #id_spotify_user = models.TextField(primary_key=True)
     name = models.TextField()
-    address = models.TextField()
+    street = models.TextField()
+    number = models.TextField()
     city = models.TextField()
+    zipCode = models.TextField(blank=True, null=True)
+    stateOrProvince = models.TextField(blank=True, null=True)
+    country = models.TextField(blank=True, null=True)
     user = models.ForeignKey(User)
     def __unicode__(self):
         return self.name
     def get_absolute_url(self):
         return "/pub/" + str(self.pk)
-
-#class Client_Pub(models.Model):
- #   id_client = models.ForeignKey(Client, primary_key=True)
-  #  id_pub = models.ForeignKey(Pub, primary_key=True)
 
 class User_Pub(models.Model):
     id_user = models.ForeignKey(User)
@@ -30,7 +22,6 @@ class User_Pub(models.Model):
         unique_together = ('id_user', 'id_pub')
 
 class Playlist(models.Model):
-    #id_spotify_playlist = models.TextField(primary_key=True)
     id_pub = models.ForeignKey(Pub, related_name='playlists')
     name = models.TextField()
     user = models.ForeignKey(User)

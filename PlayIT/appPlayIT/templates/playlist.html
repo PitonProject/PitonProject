@@ -1,5 +1,7 @@
 {% extends "basepage.html" %}
+{% load staticfiles %}
 {% block title %}PlayIT - {{ pub.name }} - {{ playlist.name }}{% endblock %}
+{% block footer %}Created by {{ playlist.user }}{% endblock %}
 {% block content %}
     <h1>{{ pub.name }} - {{ playlist.name }}
     {% if user_is_owner %}

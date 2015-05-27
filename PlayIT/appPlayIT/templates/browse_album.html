@@ -14,8 +14,12 @@
             </tr>
         {% endfor %}
     </table>
-    <h3>Total results: {{ albums.total }}. Max: {{ albums.limit }}. Offset: {{ albums.offset }}</h3>
+    <h3>Total results: {{ albums.total }}. Max displayed: {{ albums.limit }}. Offset: {{ albums.offset }}</h3>
+    <p></p>
+    {% if albums.previous %}
+        <a href="{{ previous_page }}"><button>Previous page</button></a>
+    {% endif %}
     {% if albums.next %}
-        <p><a href="{{ next_page }}">Next page</a> </p>
+        <a href="{{ next_page }}"><button>Next page</button></a>
     {% endif %}
 {% endblock %}

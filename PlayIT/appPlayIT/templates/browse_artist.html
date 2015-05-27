@@ -14,8 +14,12 @@
             </tr>
         {% endfor %}
     </table>
-    <h3>Total results: {{ artists.total }}. Max: {{ artists.limit }}. Offset: {{ artists.offset }}</h3>
+    <h3>Total results: {{ artists.total }}. Max displayed: {{ artists.limit }}. Offset: {{ artists.offset }}</h3>
+    <p></p>
+    {% if artists.previous %}
+        <a href="{{ previous_page }}"><button>Previous page</button></a>
+    {% endif %}
     {% if artists.next %}
-        <p><a href="{{ next_page }}">Next page</a> </p>
+        <a href="{{ next_page }}"><button>Next page</button></a>
     {% endif %}
 {% endblock %}
