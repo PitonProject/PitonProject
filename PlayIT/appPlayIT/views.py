@@ -15,7 +15,7 @@ from django.shortcuts import get_object_or_404
 def mainpage(request):
     pubs = None
     if request.user.is_authenticated():
-        pubs = Pub.objects.filter(user_pub__in=User_Pub.objects.filter(id_user=request.user))
+        pubs = Pub.objects.filter(user_pub__in=User_Pub.objects.filter(user=request.user))
     return render_to_response(
         'mainpage.html',
         {
@@ -127,9 +127,9 @@ def track(request, track_id):
     pubs = None
     pub_playlists = []
     if request.user.is_authenticated:
-        pubs = Pub.objects.filter(user_pub__in=User_Pub.objects.filter(id_user=request.user))
+        pubs = Pub.objects.filter(user_pub__in=User_Pub.objects.filter(user=request.user))
         for pub in pubs:
-            playlists = Playlist.objects.filter(id_pub = pub.id)
+            playlists = Playlist.objects.filter(pub = pub.id)
             if len(playlists) > 0:
                 pub_playlists.append((pub, playlists))
     return render_to_response(
@@ -185,7 +185,7 @@ def get_pub(request, pub_id, format='html'):
             if pub.user == request.user:
                 user_is_owner = True
             try:
-                user_pub = User_Pub.objects.get(id_user = request.user, id_pub = pub)
+                user_pub = User_Pub.objects.get(user = request.user, pub = pub)
                 user_follow_pub = 1 # User follow pub
             except:
                 user_follow_pub = 2 # User authenticated, user don't follow pub
@@ -196,7 +196,7 @@ def get_pub(request, pub_id, format='html'):
                 'pub' : pub,
                 'user_follow_pub': user_follow_pub,
                 'user_is_owner': user_is_owner,
-                'playlists' : Playlist.objects.filter(id_pub=pub_id)
+                'playlists' : Playlist.objects.filter(pub=pub_id)
             }
         )
 
@@ -209,7 +209,7 @@ def get_pub_playlists_xml(request, pub_id):
 def get_pub_playlists(requests, pub_id, format='html'):
     try:
         pub = Pub.objects.get(id=pub_id)
-        playlists = Playlist.objects.filter(id_pub=pub_id)
+        playlists = Playlist.objects.filter(pub=pub_id)
     except:
         raise Http404('Pub not found.')
     if format == 'json':
@@ -263,8 +263,8 @@ def get_playlist(request, playlist_id, format='html'):
             {
                 'user': request.user,
                 'playlist' : playlist,
-                'tracks' : Track.objects.filter(playlist_track__in=Playlist_Track.objects.filter(id_playlist=playlist_id)),
-                'pub' : playlist.id_pub,
+                'tracks' : Track.objects.filter(playlist_track__in=Playlist_Track.objects.filter(playlist=playlist_id)),
+                'pub' : playlist.pub,
                 'user_is_owner': user_is_owner
             }
         )
@@ -272,7 +272,7 @@ def get_playlist(request, playlist_id, format='html'):
 def get_playlist_tracks(request, playlist_id, format='html'):
     try:
         playlist = Playlist.objects.get(id=playlist_id)
-        tracks = Track.objects.filter(playlist_track__in=Playlist_Track.objects.filter(id_playlist=playlist_id))
+        tracks = Track.objects.filter(playlist_track__in=Playlist_Track.objects.filter(playlist=playlist_id))
     except:
         raise Http404('Playlist not found.')
     if format == 'json':
@@ -326,14 +326,14 @@ class PlaylistCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        form.instance.id_pub = Pub.objects.get(id=self.kwargs['pk'])
+        form.instance.pub = Pub.objects.get(id=self.kwargs['pk'])
         return super(PlaylistCreate, self).form_valid(form)
 
 
 @login_required()
 def add_track_to_playlist(request, pk, pkr):
     try: # Track is already in playlist
-        playlist_track = Playlist_Track.objects.get(id_playlist = pkr, id_track = pk)
+        playlist_track = Playlist_Track.objects.get(playlist = pkr, track = pk)
         return HttpResponseRedirect("/playlist/" + str(pkr))
     except:
         pass
@@ -355,9 +355,9 @@ def add_track_to_playlist(request, pk, pkr):
         else:
             raise Http404('Track not found.')
     new_playlist_track = Playlist_Track(
-        id_playlist = playlist,
-        id_track = track,
-        id_user = request.user)
+        playlist = playlist,
+        track = track,
+        user = request.user)
     new_playlist_track.save()
     return HttpResponseRedirect("/playlist/" + str(pkr))
 
@@ -365,10 +365,10 @@ def add_track_to_playlist(request, pk, pkr):
 def remove_track_from_playlist(request, pk, pkr):
     playlist_track = None
     try: # Track is already in playlist
-        playlist_track = Playlist_Track.objects.get(id_playlist = pkr, id_track = pk)
+        playlist_track = Playlist_Track.objects.get(playlist = pkr, track = pk)
     except:
         raise Http404('Track not found on this playlist!')
-    if request.user == playlist_track.id_user:
+    if request.user == playlist_track.user:
         playlist_track.delete()
     else:
         raise PermissionDenied
@@ -377,17 +377,17 @@ def remove_track_from_playlist(request, pk, pkr):
 @login_required()
 def follow_pub(request, pk):
     try:
-        user_pub = User_Pub.objects.get(id_user = request.user, id_pub = pk)
+        user_pub = User_Pub.objects.get(user = request.user, pub = pk)
     except:
         pub = get_object_or_404(Pub, id = pk)
-        user_pub = User_Pub(id_user = request.user, id_pub = pub)
+        user_pub = User_Pub(user = request.user, pub = pub)
         user_pub.save()
     return HttpResponseRedirect("/pub/" + str(pk))
 
 @login_required()
 def unfollow_pub(request, pk):
     try:
-        user_pub = User_Pub.objects.get(id_user = request.user, id_pub = pk)
+        user_pub = User_Pub.objects.get(user = request.user, pub = pk)
         user_pub.delete()
     except:
         raise Http404('Pub not found on your follow list!')

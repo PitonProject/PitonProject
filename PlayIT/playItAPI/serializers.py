@@ -20,18 +20,20 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 class PubSerializer(serializers.HyperlinkedModelSerializer):
     url = HyperlinkedIdentityField(view_name='playItAPI:pub-detail')
+    user = HyperlinkedRelatedField(view_name='playItAPI:user-detail', read_only=True)
     playlists = HyperlinkedRelatedField(many=True, read_only=True, view_name='playItAPI:playlist-detail')
     class Meta:
         model = Pub
-        fields = ('id', 'url', 'name', 'address', 'city', 'playlists')
+        fields = ('id', 'url', 'name', 'street', 'number', 'city', 'zipCode', 'stateOrProvince', 'country', 'user', 'playlists')
 
 
 class PlaylistSerializer(serializers.HyperlinkedModelSerializer):
     url = HyperlinkedIdentityField(view_name='playItAPI:playlist-detail')
-    id_pub = HyperlinkedRelatedField(view_name='playItAPI:pub-detail', read_only=True)
+    user = HyperlinkedRelatedField(view_name='playItAPI:user-detail', read_only=True)
+    pub = HyperlinkedRelatedField(view_name='playItAPI:pub-detail', read_only=True)
     class Meta:
         model = Playlist
-        fields = ('id', 'url', 'id_pub', 'name')
+        fields = ('id', 'url', 'pub', 'name', 'user')
 
 
 class TrackSerializer(serializers.HyperlinkedModelSerializer):
