@@ -2,28 +2,46 @@
 {% block title %}PlayIT - {{ pub.name }}{% endblock %}
 {% block footer %}Created by {{ pub.user }}{% endblock %}
 {% block content %}
-    <h1>{{ pub.name }}
-    {% if user_follow_pub == 1 %}
-        <a href="/unfollow_pub/{{ pub.id }}"> (Unfollow)</a>
-    {% elif user_follow_pub == 2 %}
-        <a href="/follow_pub/{{ pub.id }}"> (Follow)</a>
-    {% endif %}
-    {% if user_is_owner %}
-        <a href="/pub/{{ pub.id }}/edit"> (edit)</a>
-        <a href="/pub/{{ pub.id }}/delete"> (remove)</a>
-    {% endif %}</h1>
-    <h3>{{ pub.street }}, {{ pub.number }} - {{ pub.city }}</h3>
-    {% if playlists %}
-        <h2>Showing Playlists of Pub: {{ pub.name }}</h2>
-        <ul>
-            {% for playlist in playlists %}
-                <li><h2><a href="/playlist/{{ playlist.id }}">{{ playlist.name }}</a></h2></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <h2>This pub has no registered playlists!</h2>
-    {% endif %}
-    {% if user_follow_pub != 0 %}
-        <p></p><a href="/pub/{{ pub.id }}/playlist/create"><button>Create a playlist</button></a></p>
-    {% endif %}
+    <div vocab="http://schema.org/" resource="/pub/{{ pub.id }}" typeof="BarOrPub">
+        <span property="name" content="{{ pub.name }}"/>
+        <h1>{{ pub.name }}
+            {% if user_follow_pub == 1 %}
+                <a href="/unfollow_pub/{{ pub.id }}"> (Unfollow)</a>
+            {% elif user_follow_pub == 2 %}
+                <a href="/follow_pub/{{ pub.id }}"> (Follow)</a>
+            {% endif %}
+            {% if user_is_owner %}
+                <a href="/pub/{{ pub.id }}/edit"> (edit)</a>
+                <a href="/pub/{{ pub.id }}/delete"> (remove)</a>
+            {% endif %}
+        </h1>
+        <div property="review" typeof="Review">
+            <h2>Reviews</h2>
+            <div property="author" typeof="Person"><a property="name">{{ pub.user }}</a></div>
+        </div>
+        <h3 property="address" typeof="PostalAddress">
+            <a property="streetAddress">{{ pub.street }}, {{ pub.number }}</a>
+            <a property="addressLocality">{{ pub.city }}</a>
+            <span property="postalCode" content="{{ pub.zipCode }}"/>
+            <span property="addressRegion" content="{{ pub.stateOrProvince }}"/>
+            <span property="addressCountry" content="{{ pub.country }}"/>
+        </h3>
+        {% if playlists %}
+            <h2>Showing Playlists of Pub: {{ pub.name }}</h2>
+            <ul>
+                {% for playlist in playlists %}
+                    <li>
+                        <a typeof="MusicPlaylist" href="/playlist/{{ playlist.id }}">
+                            <span property="name">{{ playlist.name }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h2>This pub has no registered playlists!</h2>
+        {% endif %}
+        {% if user_follow_pub != 0 %}
+            <p><a href="/pub/{{ pub.id }}/playlist/create"><button>Create a playlist</button></a></p>
+        {% endif %}
+    </div>
 {% endblock %}
