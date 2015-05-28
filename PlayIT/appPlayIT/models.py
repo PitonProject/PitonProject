@@ -20,6 +20,8 @@ class User_Pub(models.Model):
     pub = models.ForeignKey(Pub)
     class Meta:
         unique_together = ('user', 'pub')
+    def __unicode__(self):
+        return self.user.username + " - " +  self.pub.name
 
 class Playlist(models.Model):
     pub = models.ForeignKey(Pub, related_name='playlists')
@@ -46,3 +48,5 @@ class Playlist_Track(models.Model):
     user = models.ForeignKey(User)
     class Meta:
         unique_together = ('playlist', 'track')
+    def __unicode__(self):
+        return self.playlist.name + " - " +  self.track.name
