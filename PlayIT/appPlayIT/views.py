@@ -10,6 +10,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from appPlayIT.forms import *
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
+from django.template import RequestContext
 
 # Create your views here.
 def mainpage(request):
@@ -196,8 +197,10 @@ def get_pub(request, pub_id, format='html'):
                 'pub' : pub,
                 'user_follow_pub': user_follow_pub,
                 'user_is_owner': user_is_owner,
-                'playlists' : Playlist.objects.filter(pub=pub_id)
-            }
+                'playlists' : Playlist.objects.filter(pub=pub_id),
+                'RATING_CHOICES' : Review.RATING_CHOICES,
+                'reviews' : Review.objects.filter(pub=pub_id)
+            }, RequestContext(request)
         )
 
 def get_pub_playlists_json(request, pub_id):
@@ -391,4 +394,15 @@ def unfollow_pub(request, pk):
         user_pub.delete()
     except:
         raise Http404('Pub not found on your follow list!')
+    return HttpResponseRedirect("/pub/" + str(pk))
+
+@login_required()
+def review(request, pk):
+    pub = get_object_or_404(Pub, pk=pk)
+    new_review = Review(
+        rating=request.POST['rating'],
+        comment=request.POST['comment'],
+        user=request.user,
+        pub=pub)
+    new_review.save()
     return HttpResponseRedirect("/pub/" + str(pk))

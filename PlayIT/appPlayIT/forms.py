@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from appPlayIT.models import Pub, Playlist, Track
+from appPlayIT.models import Pub, Playlist, Track, Review
 
 class PubForm(ModelForm):
     class Meta:
@@ -15,3 +15,8 @@ class TrackForm(ModelForm):
     class Meta:
         model = Track
         #exclude = ()
+
+class ReviewForm(ModelForm):
+    class Meta:
+        model = Review
+        exclude = ('user', 'date', 'pub')

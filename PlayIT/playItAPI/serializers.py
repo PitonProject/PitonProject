@@ -2,7 +2,7 @@ from django.contrib.auth.models import User, Group, Permission
 from rest_framework import serializers
 from rest_framework.relations import HyperlinkedRelatedField, HyperlinkedIdentityField
 from rest_framework.fields import CharField
-from appPlayIT.models import Pub, Playlist, Track
+from appPlayIT.models import Pub, Playlist, Track, Review
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -41,3 +41,13 @@ class TrackSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Track
         fields = ('spotify_id', 'url', 'name', 'artist', 'album')
+
+
+class ReviewSerializer(serializers.HyperlinkedModelSerializer):
+    url = HyperlinkedIdentityField(view_name='playItAPI:review-detail')
+    pub = HyperlinkedRelatedField(view_name='playItAPI:pub-detail', read_only=True)
+    user = CharField(read_only=True)
+
+    class Meta:
+        model = Review
+        fields = ('url', 'rating', 'comment', 'user', 'date', 'pub')

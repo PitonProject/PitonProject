@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import date
 
 class Pub(models.Model):
     name = models.TextField()
@@ -50,3 +51,15 @@ class Playlist_Track(models.Model):
         unique_together = ('playlist', 'track')
     def __unicode__(self):
         return self.playlist.name + " - " +  self.track.name
+
+class Review(models.Model):
+    RATING_CHOICES = ((1,'1'),(2,'2'),(3,'3'),(4,'4'),(5,'5'))
+    rating = models.PositiveSmallIntegerField('Ratings (stars)', blank=False, default=3, choices=RATING_CHOICES)
+    comment = models.TextField(blank=True, null=True)
+    user = models.ForeignKey(User, default=1)
+    date = models.DateField(default=date.today)
+    pub = models.ForeignKey(Pub)
+    def __unicode__(self):
+        return self.pub.name + " - " + str(self.rating)
+    def get_absolute_url(self):
+        return "/pub/" + str(self.pub.pk)

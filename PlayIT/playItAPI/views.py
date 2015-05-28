@@ -5,8 +5,8 @@ from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 from rest_framework.response import Response
-from appPlayIT.models import Pub, Playlist, Track
-from playItAPI.serializers import UserSerializer, GroupSerializer, PubSerializer, PlaylistSerializer, TrackSerializer
+from appPlayIT.models import Pub, Playlist, Track, Review
+from playItAPI.serializers import UserSerializer, GroupSerializer, PubSerializer, PlaylistSerializer, TrackSerializer, ReviewSerializer
 
 
 @api_view(['GET'])
@@ -18,6 +18,7 @@ def api_root(request, format=None):
         'users': reverse('user-list', vrequest=request),
         'groups': reverse('group-list', request=request),
         'pubs': reverse('pub-list', request=request),
+        'reviews': reverse('reviews-list', request=request),
         'playlists': reverse('playlists-list', request=request),
         'tracks': reverse('track-list', request=request),
     })
@@ -106,6 +107,23 @@ class GroupDetail(generics.RetrieveUpdateDestroyAPIView):
     model = Group
     serializer_class = GroupSerializer
 
+
+class ReviewList(generics.ListCreateAPIView):
+    """
+      API endpoint that	represents a list of reviews
+    """
+    model = Review
+    serializer_class = ReviewSerializer
+
+
+class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+      API endpoint that	represents a single review
+    """
+    model = Review
+    serializer_class = ReviewSerializer
+
+
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
@@ -144,3 +162,11 @@ class TrackViewSet(viewsets.ModelViewSet):
     """
     queryset = Track.objects.all()
     serializer_class = TrackSerializer
+
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows review to be viewed or edited.
+    """
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer

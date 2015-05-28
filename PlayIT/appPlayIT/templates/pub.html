@@ -15,10 +15,6 @@
                 <a href="/pub/{{ pub.id }}/delete"> (remove)</a>
             {% endif %}
         </h1>
-        <div property="review" typeof="Review">
-            <h2>Reviews</h2>
-            <div property="author" typeof="Person"><a property="name">{{ pub.user }}</a></div>
-        </div>
         <h3 property="address" typeof="PostalAddress">
             <a property="streetAddress">{{ pub.street }}, {{ pub.number }}</a>
             <a property="addressLocality">{{ pub.city }}</a>
@@ -26,8 +22,39 @@
             <span property="addressRegion" content="{{ pub.stateOrProvince }}"/>
             <span property="addressCountry" content="{{ pub.country }}"/>
         </h3>
+
+        {% if reviews %}
+            <h2>Reviews</h2>
+            <ul>
+                {% for review in reviews %}
+                    <li>
+                        <p>{{ review.rating }} star{{ review.rating|pluralize }}
+                            {% if review.user == user %}
+                                <a href="/pub/{{ pub.id }}/review/{{ review.id }}/edit"> (edit)</a>
+                                <a href="/pub/{{ pub.id }}/review/{{ review.id }}/delete"> (remove)</a>
+                            {% endif %}</p>
+                        <p>{{ review.comment }}</p>
+                        <p>Created by {{ review.user }} on {{ review.date}}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <h2>Add Review</h2>
+        <form action="/pub/{{ pub.id }}/review/create/" method="post">
+            {% csrf_token %}
+            Message: <textarea name="comment" id="comment" rows="4"></textarea>
+            <p>Rating:</p>
+            <p>
+            {% for rate in RATING_CHOICES %}
+                <input type="radio" name="rating" id="rating{{ forloop.counter }}" value="{{ rate.1 }}" />
+                <label for="choice{{ forloop.counter }}">{{ rate.1 }} star{{ rate.0|pluralize }}</label><br />
+            {% endfor %}
+            </p>
+            <input type="submit" value="Add" />
+        </form>
+
         {% if playlists %}
-            <h2>Showing Playlists of Pub: {{ pub.name }}</h2>
+            <h2>Playlists</h2>
             <ul>
                 {% for playlist in playlists %}
                     <li>
