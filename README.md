@@ -120,4 +120,4 @@ Per accedir al panel d'administració s'ha d'accedir a `/admin`.
 L'usuari administrador és: `admin` amb password: `123456`
 
 ## Funcionament general
-Quan accedim a la pàgina principal, una vegada hem superat el procés de login, podem veure la llista de pubs que seguim (amb l'objectiu de participar al seu reportori musical). A l'esquerra de la pàgina hi trobarem el menú principal de navegació, el qual ens permetrà accedir a les diferents seccions que hem implementat, com per exemple, a la de "Add track to pub playlist", la qual ens permet afegir una canço a la playlist d'un pub, tot mitjançant la cerca d'aquesta dins de la plataforma de Spotify.
+Quan accedim a la pàgina principal, una vegada hem superat el procés de login, podem veure la llista de pubs que seguim (amb l'objectiu de participar al seu reportori musical). A l'esquerra de la pàgina hi trobarem el menú principal de navegació, el qual ens permetrà accedir a les diferents seccions que hem implementat, com per exemple, a la de "Add track to pub playlist", la qual ens permet afegir una cançó a la playlist d'un pub, tot mitjançant la cerca d'aquesta dins de la plataforma de Spotify.
