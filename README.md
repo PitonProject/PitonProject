@@ -1,7 +1,7 @@
 # PitonProject
 Aplicació desenvolupada per <a href="https://github.com/sanchezfauste">Marc Sánchez</a> i <a href="https://github.com/ferranverdes">Ferran Verdés</a>
 
-La idea principal de l'aplicació és que els usuaris d'un pub puguin escollir la música que volen que hi soni. Concretament, es tracta d'una app que permet a un usuari seguir als seus pubs de preferència, consultar les playlists de música que aquest té associades i afegir-hi cançons, tot partint del conjunt de música que s'ofereix a la plataforma de Spotify.
+La idea principal de l'aplicació és que els usuaris d'un pub puguin escollir la música que volen que hi soni. Concretament, es tracta d'una app que permet a un usuari seguir als seus pubs de preferència, consultar les playlists de música que aquest té associades i afegir-hi cançons, tot partint del repertori de música que s'ofereix a la plataforma Spotify.
 
 ## API RESTful
 <table>
@@ -119,5 +119,5 @@ El projecte inclou una base de dades SQLite per tal de poder provar-lo.
 Per accedir al panel d'administració s'ha d'accedir a `/admin`.
 L'usuari administrador és: `admin` amb password: `123456`
 
-## Funcionament
-Quan accedim a la pàgina principal, una vegada hem superat el procés de login, podem veure la llista de pubs que seguim (amb l'objectiu de participar al seu reportori musical). A l'esquerra de la pàgina hi trobarem el menú principal de navegació, el qual ens permetrà accedir a les diferents seccions que hem implementat, com per exemple, a la de "Add track to pub playlist", la qual ens permet afegir una canço a la playlist d'un pub, mitjançant la cerca d'aquesta dins de la plataforma de Spotify.
+## Funcionament general
+Quan accedim a la pàgina principal, una vegada hem superat el procés de login, podem veure la llista de pubs que seguim (amb l'objectiu de participar al seu reportori musical). A l'esquerra de la pàgina hi trobarem el menú principal de navegació, el qual ens permetrà accedir a les diferents seccions que hem implementat, com per exemple, a la de "Add track to pub playlist", la qual ens permet afegir una canço a la playlist d'un pub, tot mitjançant la cerca d'aquesta dins de la plataforma de Spotify.
