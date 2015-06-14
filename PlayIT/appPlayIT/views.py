@@ -190,6 +190,11 @@ def get_pub(request, pub_id, format='html'):
                 user_follow_pub = 1 # User follow pub
             except:
                 user_follow_pub = 2 # User authenticated, user don't follow pub
+        reviews = Review.objects.filter(pub=pub_id)
+        reviews_avg = None
+        if reviews:
+            reviews_avg = sum([int(rating[0]) for rating in reviews.values_list('rating')])/float(len(reviews))
+        print reviews_avg
         return render_to_response(
             'pub.html',
             {
@@ -199,7 +204,8 @@ def get_pub(request, pub_id, format='html'):
                 'user_is_owner': user_is_owner,
                 'playlists' : Playlist.objects.filter(pub=pub_id),
                 'RATING_CHOICES' : Review.RATING_CHOICES,
-                'reviews' : Review.objects.filter(pub=pub_id)
+                'reviews' : reviews,
+                'reviews_avg' : reviews_avg
             }, RequestContext(request)
         )
 
