@@ -27,14 +27,19 @@
             <h2>Reviews</h2>
             <ul>
                 {% for review in reviews %}
-                    <li>
-                        <p>{{ review.rating }} star{{ review.rating|pluralize }}
+                    <li property="review" typeof="Review">
+                        <p property="reviewRating" typeof="Rating">
+                            <span property="worstRating" content="1"/>
+                            <span property="ratingValue">{{ review.rating }}</span> star{{ review.rating|pluralize }}
                             {% if review.user == user %}
                                 <a href="/pub/{{ pub.id }}/review/{{ review.id }}/edit"> (edit)</a>
                                 <a href="/pub/{{ pub.id }}/review/{{ review.id }}/delete"> (remove)</a>
-                            {% endif %}</p>
-                        <p>{{ review.comment }}</p>
-                        <p>Created by {{ review.user }} on {{ review.date}}</p>
+                            {% endif %}
+                            <span property="bestRating" content="5"/>
+                        </p>
+                        <p property="description">{{ review.comment }}</p>
+                        <p>Created by <span property="author">{{ review.user }}</span> on
+                            <span property="datePublished">{{ review.date}}</span></p>
                     </li>
                 {% endfor %}
             </ul>
