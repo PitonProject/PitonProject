@@ -25,10 +25,10 @@
 
         {% if reviews %}
             <h2>Reviews</h2>
-            <ul>
+            <ul rel="review">
                 {% for review in reviews %}
-                    <li property="review" typeof="Review">
-                        <p property="reviewRating" typeof="Rating">
+                    <li typeof="Review">
+                        <p rel="reviewRating" typeof="Rating">
                             <span property="worstRating" content="1"/>
                             <span property="ratingValue">{{ review.rating }}</span> star{{ review.rating|pluralize }}
                             {% if review.user == user %}
