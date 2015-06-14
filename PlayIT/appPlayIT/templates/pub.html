@@ -24,7 +24,7 @@
         </h3>
 
         {% if reviews %}
-            <h2>Reviews</h2>
+            <h2>Reviews ({{ number_of_reviews }}) - Average: {{ reviews_avg }}</h2>
             <ul rel="review">
                 {% for review in reviews %}
                     <li typeof="Review">
