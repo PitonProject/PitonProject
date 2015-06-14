@@ -205,7 +205,8 @@ def get_pub(request, pub_id, format='html'):
                 'playlists' : Playlist.objects.filter(pub=pub_id),
                 'RATING_CHOICES' : Review.RATING_CHOICES,
                 'reviews' : reviews,
-                'reviews_avg' : reviews_avg
+                'reviews_avg' : reviews_avg,
+                'number_of_reviews' : len(reviews)
             }, RequestContext(request)
         )
 
