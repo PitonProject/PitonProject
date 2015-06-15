@@ -114,6 +114,8 @@ La idea principal de l'aplicació és que els usuaris d'un pub puguin escollir l
   </tr>
 </table>
 
+També s'ofereix una API RESTful a `/api`, en la qual només pot accedir-hi un usuari administrador. Aquesta API està implementada fent ús del Django REST framework.
+
 ## Panell d'administració
 El projecte inclou una base de dades SQLite per tal de poder provar-lo.
 Per accedir al panel d'administració s'ha d'accedir a `/admin`.
